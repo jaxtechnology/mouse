@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mouse Practice for Kids</title>
+<style>
+  :root {
+    --bg1: #fff4d6;
+    --bg2: #d6f0ff;
+    --card-bg: #ffffff;
+    --text: #2b2b3a;
+    --text-soft: #5a5a6b;
+    --accent1: #ff6b6b;
+    --accent2: #4ecdc4;
+    --accent3: #ffd93d;
+    --accent4: #a78bfa;
+    --accent5: #6bcB77;
+    --shadow: rgba(0,0,0,0.15);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg1: #201f36;
+      --bg2: #1b2a3d;
+      --card-bg: #2a2a43;
+      --text: #f4f4fb;
+      --text-soft: #cfcfe0;
+      --shadow: rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg1: #201f36;
+    --bg2: #1b2a3d;
+    --card-bg: #2a2a43;
+    --text: #f4f4fb;
+    --text-soft: #cfcfe0;
+    --shadow: rgba(0,0,0,0.5);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100%;
+    font-family: "Comic Sans MS", "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+    background: radial-gradient(circle at 20% 20%, var(--bg1), var(--bg2));
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #app {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    margin: 8px 0 4px;
+    color: var(--accent1);
+    text-shadow: 2px 2px 0 var(--shadow);
+  }
+  .subtitle {
+    color: var(--text-soft);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadein .3s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px);} to { opacity:1; transform: translateY(0);} }
+
+  /* Menu */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .game-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 8px 0 var(--shadow);
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    color: var(--text);
+    transition: transform .12s ease;
+  }
+  .game-card:hover { transform: translateY(-4px) scale(1.02); }
+  .game-card:active { transform: translateY(2px); box-shadow: 0 4px 0 var(--shadow); }
+  .game-emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
+  .game-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 4px; }
+  .game-desc { font-size: 0.95rem; color: var(--text-soft); }
+
+  /* Top bar inside a game */
+  .game-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .back-btn, .reset-btn {
+    background: var(--card-bg);
+    border: none;
+    border-radius: 16px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text);
+    box-shadow: 0 4px 0 var(--shadow);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .back-btn:active, .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--shadow); }
+  .score-pill {
+    background: var(--accent3);
+    color: #3a2e00;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 1rem;
+  }
+
+  /* Game 1: Click bubbles */
+  .bubble-field {
+    position: relative;
+    height: 420px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 0 var(--shadow);
+  }
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: white;
+    box-shadow: inset -6px -6px 10px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform .08s ease;
+  }
+  .bubble:active { transform: scale(0.85); }
+  .pop-msg {
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: var(--accent1);
+    pointer-events: none;
+    animation: floatup 0.7s ease forwards;
+  }
+  @keyframes floatup {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-40px); }
+  }
+
+  /* Game 2: Drag and drop */
+  .drag-area {
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 8px 0 var(--shadow);
+    padding: 20px;
+    min-height: 420px;
+    position: relative;
+  }
+  .drop-zones {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  .drop-zone {
+    width: 100px;
+    height: 100px;
+    border: 4px dashed var(--text-soft);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    background: rgba(0,0,0,0.03);
+  }
+  .drop-zone.filled { border-style: solid; border-color: var(--accent5); background: rgba(107,203,119,0.15); }
+  .drop-zone.hover { border-color: var(--accent2); background: rgba(78,205,196,0.15); }
+  .drag-items {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .drag-item {
+    width: 90px;
+    height: 90px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    cursor: grab;
+    box-shadow: 0 4px 0 var(--shadow);
+    touch-action: none;
+    user-select: none;
+  }
+  .drag-item.dragging { opacity: 0.5; cursor: grabbing; }
+  .drag-item.placed { visibility: hidden; }
+
+  /* Game 3: Double click balloons */
+  .balloon-field {
+    position: relative;
+    height: 420px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 0 var(--shadow);
+  }
+  .balloon {
+    position: absolute;
+    width: 70px;
+    height: 90px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    cursor: pointer;
+    box-shadow: inset -8px -8px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: transform .1s ease;
+  }
+  .balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    width: 2px;
+    height: 18px;
+    background: var(--text-soft);
+  }
+  .balloon:active { transform: scale(0.95); }
+  .balloon.armed { outline: 4px solid var(--accent3); }
+
+  /* Game 4: Scroll */
+  .scroll-progress-track {
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .scroll-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent5), var(--accent2));
+    transition: width .1s linear;
+  }
+  .scroll-field {
+    height: 420px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 24px;
+    box-shadow: 0 8px 0 var(--shadow);
+    background: linear-gradient(180deg, #bfe8ff 0%, #bfe8ff 10%, #dff5c8 55%, #8b5e34 100%);
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  .scroll-content {
+    position: relative;
+    width: 100%;
+    height: 1800px;
+  }
+  .tree-trunk {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 46px;
+    height: 100%;
+    background: #7a4f2b;
+    transform: translateX(-50%);
+    border-radius: 10px;
+  }
+  .acorn {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffd93d;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+  .acorn:active { transform: scale(0.85); }
+  .acorn.found { display: none; }
+  .treasure-note {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card-bg);
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 0 var(--shadow);
+  }
+  .scroll-hint {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.85);
+    color: #2b2b3a;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  /* Game 5: Text selection */
+  .select-area {
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 8px 0 var(--shadow);
+    padding: 30px 20px;
+    min-height: 300px;
+    text-align: center;
+  }
+  .select-target {
+    font-size: 1.2rem;
+    color: var(--text-soft);
+    margin-bottom: 26px;
+  }
+  #selectTargetWord {
+    font-weight: bold;
+    color: var(--accent1);
+    font-size: 1.5rem;
+    background: rgba(255,107,107,0.12);
+    padding: 2px 12px;
+    border-radius: 10px;
+  }
+  .select-line {
+    font-size: 2rem;
+    letter-spacing: 2px;
+    line-height: 2.4;
+    user-select: text;
+    -webkit-user-select: text;
+    cursor: text;
+    margin-bottom: 20px;
+  }
+  .select-line .word {
+    padding: 2px 4px;
+    border-radius: 6px;
+  }
+  .select-line .word.correct {
+    background: var(--accent5);
+    color: white;
+  }
+  .select-feedback {
+    min-height: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent5);
+  }
+
+  .celebrate {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 8px 0 var(--shadow);
+  }
+  .celebrate .big-emoji { font-size: 4rem; display: block; margin-bottom: 12px; }
+  .celebrate h2 { color: var(--accent5); margin: 0 0 8px; font-size: 1.8rem; }
+  .celebrate p { color: var(--text-soft); margin-bottom: 20px; }
+  .play-again-btn {
+    background: var(--accent5);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+    font-family: inherit;
+  }
+  .play-again-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
+
+  .instructions {
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>🖱️ Mouse Practice!</h1>
+    <p class="subtitle">Click, drag, and double-click to play!</p>
+  </header>
+
+  <!-- MENU -->
+  <section id="menu" class="screen active">
+    <div class="menu-grid">
+      <button class="game-card" onclick="showScreen('bubbles')">
+        <span class="game-emoji">🫧</span>
+        <div class="game-title">Pop the Bubbles</div>
+        <div class="game-desc">Click each bubble to pop it</div>
+      </button>
+      <button class="game-card" onclick="showScreen('drag')">
+        <span class="game-emoji">⭐</span>
+        <div class="game-title">Drag it Home</div>
+        <div class="game-desc">Drag shapes into the matching box</div>
+      </button>
+      <button class="game-card" onclick="showScreen('balloons')">
+        <span class="game-emoji">🎈</span>
+        <div class="game-title">Double-Click Balloons</div>
+        <div class="game-desc">Click twice fast to pop!</div>
+      </button>
+      <button class="game-card" onclick="showScreen('scroll')">
+        <span class="game-emoji">🐿️</span>
+        <div class="game-title">Scroll for Acorns</div>
+        <div class="game-desc">Scroll down and click every acorn</div>
+      </button>
+      <button class="game-card" onclick="showScreen('textselect')">
+        <span class="game-emoji">🖍️</span>
+        <div class="game-title">Highlight the Word</div>
+        <div class="game-desc">Click and drag over the matching word</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- GAME 1: BUBBLES -->
+  <section id="bubbles" class="screen">
+    <div class="game-bar">
+      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
+      <div class="score-pill">Popped: <span id="bubbleScore">0</span> / <span id="bubbleTotal">10</span></div>
+      <button class="reset-btn" onclick="startBubbles()">🔄 Restart</button>
+    </div>
+    <p class="instructions">Click on every bubble before they float away!</p>
+    <div class="bubble-field" id="bubbleField"></div>
+  </section>
+
+  <!-- GAME 2: DRAG -->
+  <section id="drag" class="screen">
+    <div class="game-bar">
+      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
+      <div class="score-pill">Placed: <span id="dragScore">0</span> / <span id="dragTotal">5</span></div>
+      <button class="reset-btn" onclick="startDrag()">🔄 Restart</button>
+    </div>
+    <p class="instructions">Press and drag each shape into the box with the same color!</p>
+    <div class="drag-area">
+      <div class="drop-zones" id="dropZones"></div>
+      <div class="drag-items" id="dragItems"></div>
+    </div>
+  </section>
+
+  <!-- GAME 3: BALLOONS -->
+  <section id="balloons" class="screen">
+    <div class="game-bar">
+      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
+      <div class="score-pill">Popped: <span id="balloonScore">0</span> / <span id="balloonTotal">8</span></div>
+      <button class="reset-btn" onclick="startBalloons()">🔄 Restart</button>
+    </div>
+    <p class="instructions">Click TWO times fast on a balloon to pop it!</p>
+    <div class="balloon-field" id="balloonField"></div>
+  </section>
+
+  <!-- GAME 4: SCROLL -->
+  <section id="scroll" class="screen">
+    <div class="game-bar">
+      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
+      <div class="score-pill">Acorns: <span id="scrollScore">0</span> / <span id="scrollTotal">6</span></div>
+      <button class="reset-btn" onclick="startScroll()">🔄 Restart</button>
+    </div>
+    <p class="instructions">Scroll down the tree and click every acorn you find!</p>
+    <div class="scroll-progress-track"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
+    <div class="scroll-field" id="scrollField">
+      <div class="scroll-content" id="scrollContent"></div>
+    </div>
+  </section>
+
+  <!-- GAME 5: TEXT SELECTION -->
+  <section id="textselect" class="screen">
+    <div class="game-bar">
+      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
+      <div class="score-pill">Found: <span id="selectScore">0</span> / <span id="selectTotal">5</span></div>
+      <button class="reset-btn" onclick="startTextSelect()">🔄 Restart</button>
+    </div>
+    <p class="instructions">Press the mouse down before the word, drag across it, then let go!</p>
+    <div class="select-area">
+      <div class="select-target" id="selectTarget">Find: <span id="selectTargetWord">word</span></div>
+      <div class="select-line" id="selectLine"></div>
+      <div class="select-feedback" id="selectFeedback">&nbsp;</div>
+    </div>
+  </section>
+
+  <!-- WIN SCREEN -->
+  <section id="win" class="screen">
+    <div class="celebrate">
+      <span class="big-emoji">🏆</span>
+      <h2>Great job!</h2>
+      <p id="winText">You did it!</p>
+      <button class="play-again-btn" onclick="showScreen('menu')">Back to Games</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const colors = ['#ff6b6b','#4ecdc4','#ffd93d','#a78bfa','#6bcb77','#5aa9e6','#ff9f5b','#e685c9'];
+
+// Tracks how many times each game has been played this visit, so a
+// replay (or the Restart button) can be a bit longer / different each time.
+const playCounts = { bubbles: 0, drag: 0, balloons: 0, scroll: 0, textselect: 0 };
+function nextCount(game, base, step, max) {
+  const n = Math.min(max, base + playCounts[game] * step);
+  playCounts[game]++;
+  return n;
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'bubbles') startBubbles();
+  if (id === 'drag') startDrag();
+  if (id === 'balloons') startBalloons();
+  if (id === 'scroll') startScroll();
+  if (id === 'textselect') startTextSelect();
+}
+
+function winGame(text) {
+  document.getElementById('winText').textContent = text;
+  setTimeout(() => showScreen('win'), 500);
+}
+
+/* ---------- GAME 1: BUBBLES ---------- */
+let bubblePopped = 0;
+let bubbleTotalCount = 10;
+
+function startBubbles() {
+  bubblePopped = 0;
+  bubbleTotalCount = nextCount('bubbles', 10, 3, 22);
+  document.getElementById('bubbleScore').textContent = 0;
+  document.getElementById('bubbleTotal').textContent = bubbleTotalCount;
+  const field = document.getElementById('bubbleField');
+  field.innerHTML = '';
+  const fw = field.clientWidth || 700;
+  const fh = 420;
+  for (let i = 0; i < bubbleTotalCount; i++) {
+    const size = 50 + Math.random() * 40;
+    const btn = document.createElement('button');
+    btn.className = 'bubble';
+    btn.style.width = size + 'px';
+    btn.style.height = size + 'px';
+    btn.style.left = Math.random() * (fw - size) + 'px';
+    btn.style.top = Math.random() * (fh - size) + 'px';
+    btn.style.background = colors[i % colors.length];
+    btn.textContent = '🫧';
+    btn.onclick = () => popBubble(btn);
+    field.appendChild(btn);
+  }
+}
+
+function popBubble(btn) {
+  const field = document.getElementById('bubbleField');
+  const msg = document.createElement('div');
+  msg.className = 'pop-msg';
+  msg.textContent = 'Pop!';
+  msg.style.left = btn.style.left;
+  msg.style.top = btn.style.top;
+  field.appendChild(msg);
+  setTimeout(() => msg.remove(), 700);
+  btn.remove();
+  bubblePopped++;
+  document.getElementById('bubbleScore').textContent = bubblePopped;
+  if (bubblePopped >= bubbleTotalCount) {
+    winGame('You popped all the bubbles! 🫧');
+  }
+}
+
+/* ---------- GAME 2: DRAG AND DROP ---------- */
+const shapePool = ['⭐','❤️','🔵','🟢','🔺','🟣','🟠','🔶'];
+let dragPlaced = 0;
+let dragTotalCount = 5;
+let shapeEmojis = shapePool.slice(0, 5);
+
+function startDrag() {
+  dragPlaced = 0;
+  dragTotalCount = nextCount('drag', 5, 1, shapePool.length);
+  shapeEmojis = shuffle(shapePool).slice(0, dragTotalCount);
+  document.getElementById('dragScore').textContent = 0;
+  document.getElementById('dragTotal').textContent = dragTotalCount;
+
+  const zonesEl = document.getElementById('dropZones');
+  const itemsEl = document.getElementById('dragItems');
+  zonesEl.innerHTML = '';
+  itemsEl.innerHTML = '';
+
+  const order = shuffle(shapeEmojis);
+  const colorOrder = colors.slice(0, shapeEmojis.length);
+
+  shapeEmojis.forEach((emoji, i) => {
+    const zone = document.createElement('div');
+    zone.className = 'drop-zone';
+    zone.dataset.match = emoji;
+    zone.style.background = colorOrder[i] + '22';
+    zone.style.borderColor = colorOrder[i];
+    zone.textContent = emoji;
+    zone.style.opacity = '0.35';
+    zonesEl.appendChild(zone);
+  });
+
+  order.forEach((emoji, i) => {
+    const item = document.createElement('div');
+    item.className = 'drag-item';
+    item.textContent = emoji;
+    item.dataset.emoji = emoji;
+    const colorIdx = shapeEmojis.indexOf(emoji);
+    item.style.background = colorOrder[colorIdx];
+    item.draggable = true;
+    setupDragItem(item);
+    itemsEl.appendChild(item);
+  });
+
+  setupDropZones();
+}
+
+function setupDragItem(item) {
+  item.addEventListener('dragstart', e => {
+    item.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', item.dataset.emoji);
+  });
+  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+
+  // Touch support
+  let touchClone = null;
+  item.addEventListener('touchstart', e => {
+    if (item.classList.contains('placed')) return;
+    e.preventDefault();
+    item.classList.add('dragging');
+  }, { passive: false });
+  item.addEventListener('touchmove', e => {
+    if (!item.classList.contains('dragging')) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    item.style.position = 'fixed';
+    item.style.left = (touch.clientX - 45) + 'px';
+    item.style.top = (touch.clientY - 45) + 'px';
+    item.style.zIndex = 1000;
+    document.querySelectorAll('.drop-zone').forEach(z => {
+      const r = z.getBoundingClientRect();
+      const inside = touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom;
+      z.classList.toggle('hover', inside);
+    });
+  }, { passive: false });
+  item.addEventListener('touchend', e => {
+    if (!item.classList.contains('dragging')) return;
+    item.classList.remove('dragging');
+    const touch = e.changedTouches[0];
+    let dropped = false;
+    document.querySelectorAll('.drop-zone').forEach(z => {
+      const r = z.getBoundingClientRect();
+      z.classList.remove('hover');
+      const inside = touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom;
+      if (inside) dropped = true;
+      if (inside && z.dataset.match === item.dataset.emoji && !z.classList.contains('filled')) {
+        placeItem(item, z);
+      }
+    });
+    if (!dropped) resetItemPosition(item);
+    else if (!item.classList.contains('placed')) resetItemPosition(item);
+  });
+}
+
+function resetItemPosition(item) {
+  item.style.position = '';
+  item.style.left = '';
+  item.style.top = '';
+  item.style.zIndex = '';
+}
+
+function setupDropZones() {
+  document.querySelectorAll('.drop-zone').forEach(zone => {
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+      zone.classList.add('hover');
+    });
+    zone.addEventListener('dragleave', () => zone.classList.remove('hover'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('hover');
+      const emoji = e.dataTransfer.getData('text/plain');
+      const item = document.querySelector(`.drag-item[data-emoji="${emoji}"]:not(.placed)`);
+      if (item && zone.dataset.match === emoji && !zone.classList.contains('filled')) {
+        placeItem(item, zone);
+      }
+    });
+  });
+}
+
+function placeItem(item, zone) {
+  zone.classList.add('filled');
+  zone.style.opacity = '1';
+  item.classList.add('placed');
+  resetItemPosition(item);
+  dragPlaced++;
+  document.getElementById('dragScore').textContent = dragPlaced;
+  if (dragPlaced >= dragTotalCount) {
+    winGame('You matched every shape! ⭐');
+  }
+}
+
+/* ---------- GAME 3: DOUBLE-CLICK BALLOONS ---------- */
+let balloonPopped = 0;
+let balloonTotalCount = 8;
+
+function startBalloons() {
+  balloonPopped = 0;
+  balloonTotalCount = nextCount('balloons', 8, 2, 18);
+  document.getElementById('balloonScore').textContent = 0;
+  document.getElementById('balloonTotal').textContent = balloonTotalCount;
+  const field = document.getElementById('balloonField');
+  field.innerHTML = '';
+  const fw = field.clientWidth || 700;
+  const fh = 380;
+  for (let i = 0; i < balloonTotalCount; i++) {
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    b.style.left = Math.random() * (fw - 90) + 20 + 'px';
+    b.style.top = Math.random() * (fh - 90) + 20 + 'px';
+    b.style.background = colors[i % colors.length];
+    b.textContent = '🎈';
+    let clickCount = 0;
+    let clickTimer = null;
+    b.addEventListener('click', () => {
+      clickCount++;
+      if (clickCount === 1) {
+        b.classList.add('armed');
+        clickTimer = setTimeout(() => {
+          clickCount = 0;
+          b.classList.remove('armed');
+        }, 500);
+      } else if (clickCount === 2) {
+        clearTimeout(clickTimer);
+        popBalloon(b);
+      }
+    });
+    field.appendChild(b);
+  }
+}
+
+function popBalloon(b) {
+  b.style.transform = 'scale(1.4)';
+  b.style.opacity = '0';
+  setTimeout(() => b.remove(), 150);
+  balloonPopped++;
+  document.getElementById('balloonScore').textContent = balloonPopped;
+  if (balloonPopped >= balloonTotalCount) {
+    winGame('You popped every balloon! 🎈');
+  }
+}
+
+/* ---------- GAME 4: SCROLL ---------- */
+let scrollFound = 0;
+let scrollTotalCount = 6;
+
+function startScroll() {
+  scrollFound = 0;
+  scrollTotalCount = nextCount('scroll', 6, 2, 14);
+  document.getElementById('scrollScore').textContent = 0;
+  document.getElementById('scrollTotal').textContent = scrollTotalCount;
+  document.getElementById('scrollProgressFill').style.width = '0%';
+
+  const content = document.getElementById('scrollContent');
+  content.innerHTML = '';
+  // A longer tree for more acorns, so later rounds take more scrolling.
+  const contentHeight = 1200 + scrollTotalCount * 180;
+  content.style.height = contentHeight + 'px';
+
+  const trunk = document.createElement('div');
+  trunk.className = 'tree-trunk';
+  content.appendChild(trunk);
+
+  const hint = document.createElement('div');
+  hint.className = 'scroll-hint';
+  hint.textContent = '⬇️ Keep scrolling!';
+  content.appendChild(hint);
+
+  const spacing = (contentHeight - 300) / scrollTotalCount;
+  for (let i = 0; i < scrollTotalCount; i++) {
+    const acorn = document.createElement('button');
+    acorn.className = 'acorn';
+    acorn.textContent = '🌰';
+    const top = 140 + i * spacing + (Math.random() * 40 - 20);
+    const side = i % 2 === 0 ? (10 + Math.random() * 15) : (75 - Math.random() * 15);
+    acorn.style.top = top + 'px';
+    acorn.style.left = side + '%';
+    acorn.onclick = () => foundAcorn(acorn);
+    content.appendChild(acorn);
+  }
+
+  const note = document.createElement('div');
+  note.className = 'treasure-note';
+  note.textContent = '🐿️ The end of the tree!';
+  content.appendChild(note);
+
+  const field = document.getElementById('scrollField');
+  field.scrollTop = 0;
+  field.onscroll = () => {
+    const pct = (field.scrollTop / (field.scrollHeight - field.clientHeight)) * 100;
+    document.getElementById('scrollProgressFill').style.width = Math.min(100, pct) + '%';
+    hint.style.opacity = field.scrollTop > 40 ? '0' : '1';
+  };
+}
+
+function foundAcorn(acorn) {
+  acorn.classList.add('found');
+  scrollFound++;
+  document.getElementById('scrollScore').textContent = scrollFound;
+  if (scrollFound >= scrollTotalCount) {
+    winGame('You scrolled all the way and found every acorn! 🌰');
+  }
+}
+
+/* ---------- GAME 5: TEXT SELECTION ---------- */
+const wordPool = [
+  'dog','cat','sun','bird','hat','red','blue','green','moon','pig',
+  'star','frog','milk','tree','fish','duck','lamp','book','bear','kite',
+  'rain','cake','ship','lion','ball','crab','nest','king','swim','farm'
+];
+let selectRounds = [];
+let selectIndex = 0;
+let selectScore = 0;
+
+function buildSelectRounds(count) {
+  const targets = shuffle(wordPool).slice(0, count);
+  return targets.map(target => {
+    const distractors = shuffle(wordPool.filter(w => w !== target)).slice(0, 4);
+    return { words: shuffle([target, ...distractors]), target };
+  });
+}
+
+function startTextSelect() {
+  const count = nextCount('textselect', 5, 1, 10);
+  selectRounds = buildSelectRounds(count);
+  selectIndex = 0;
+  selectScore = 0;
+  document.getElementById('selectScore').textContent = 0;
+  document.getElementById('selectTotal').textContent = selectRounds.length;
+  document.getElementById('selectFeedback').innerHTML = '&nbsp;';
+  loadSelectRound();
+}
+
+function loadSelectRound() {
+  const round = selectRounds[selectIndex];
+  document.getElementById('selectTargetWord').textContent = round.target;
+  document.getElementById('selectFeedback').innerHTML = '&nbsp;';
+  const line = document.getElementById('selectLine');
+  line.innerHTML = '';
+  round.words.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w;
+    line.appendChild(span);
+    if (i < round.words.length - 1) line.appendChild(document.createTextNode('  '));
+  });
+}
+
+function checkSelection() {
+  const round = selectRounds[selectIndex];
+  const sel = window.getSelection();
+  const text = sel.toString().trim().toLowerCase().replace(/[^a-z]/g, '');
+  const feedback = document.getElementById('selectFeedback');
+  if (!text) return;
+  if (text === round.target.toLowerCase()) {
+    feedback.textContent = '🎉 Yes! That\'s ' + round.target + '!';
+    feedback.style.color = 'var(--accent5)';
+    selectScore++;
+    document.getElementById('selectScore').textContent = selectScore;
+    sel.removeAllRanges();
+    selectIndex++;
+    if (selectIndex >= selectRounds.length) {
+      setTimeout(() => winGame('You found every word! 🖍️'), 600);
+    } else {
+      setTimeout(loadSelectRound, 700);
+    }
+  } else {
+    feedback.textContent = 'Try again — select just "' + round.target + '"';
+    feedback.style.color = 'var(--accent1)';
+    setTimeout(() => { sel.removeAllRanges(); }, 500);
+  }
+}
+
+document.getElementById('selectLine').addEventListener('mouseup', checkSelection);
+document.getElementById('selectLine').addEventListener('touchend', checkSelection);
+</script>
+</body>
+</html>
