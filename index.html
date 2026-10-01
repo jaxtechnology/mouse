@@ -21,583 +21,313 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
     box-sizing: border-box;
   }
-  :root:not([data-theme="light"]) {
-    @media (prefers-color-scheme: dark) {
-      --bg1: #201f36;
-      --bg2: #1b2a3d;
-      --card-bg: #2a2a43;
-      --text: #f4f4fb;
-      --text-soft: #cfcfe0;
-      --shadow: rgba(0,0,0,0.5);
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg1: #201f36; --bg2: #1b2a3d; --card-bg: #2a2a43;
+      --text: #f4f4fb; --text-soft: #cfcfe0; --shadow: rgba(0,0,0,0.5);
     }
-  }
-  :root[data-theme="dark"] {
-    --bg1: #201f36;
-    --bg2: #1b2a3d;
-    --card-bg: #2a2a43;
-    --text: #f4f4fb;
-    --text-soft: #cfcfe0;
-    --shadow: rgba(0,0,0,0.5);
   }
   html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    min-height: 100%;
+    margin: 0; min-height: 100%;
     font-family: "Comic Sans MS", "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
     background: radial-gradient(circle at 20% 20%, var(--bg1), var(--bg2));
-    color: var(--text);
-    overflow-x: hidden;
-    -webkit-tap-highlight-color: transparent;
+    color: var(--text); overflow-x: hidden; -webkit-tap-highlight-color: transparent;
   }
-  #app {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px 16px 48px;
-    min-height: 100vh;
-  }
-  header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+  #app { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; min-height: 100vh; }
+  header { text-align: center; margin-bottom: 20px; }
   h1 {
-    font-size: clamp(1.8rem, 6vw, 2.6rem);
-    margin: 8px 0 4px;
-    color: var(--accent1);
-    text-shadow: 2px 2px 0 var(--shadow);
+    font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 8px 0 4px;
+    color: var(--accent1); text-shadow: 2px 2px 0 var(--shadow);
   }
-  .subtitle {
-    color: var(--text-soft);
-    font-size: 1.1rem;
-    margin: 0;
-  }
+  .subtitle { color: var(--text-soft); font-size: 1.1rem; margin: 0; }
   .screen { display: none; }
   .screen.active { display: block; animation: fadein .3s ease; }
   @keyframes fadein { from { opacity: 0; transform: translateY(8px);} to { opacity:1; transform: translateY(0);} }
 
-  /* Menu */
   .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 18px;
-    margin-top: 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px; margin-top: 24px;
   }
   .game-card {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 24px 16px;
-    text-align: center;
-    box-shadow: 0 8px 0 var(--shadow);
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-    color: var(--text);
-    transition: transform .12s ease;
+    background: var(--card-bg); border-radius: 22px; padding: 20px 14px; text-align: center;
+    box-shadow: 0 8px 0 var(--shadow); cursor: pointer; border: none;
+    font-family: inherit; color: var(--text); transition: transform .12s ease;
   }
   .game-card:hover { transform: translateY(-4px) scale(1.02); }
   .game-card:active { transform: translateY(2px); box-shadow: 0 4px 0 var(--shadow); }
-  .game-emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
-  .game-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 4px; }
-  .game-desc { font-size: 0.95rem; color: var(--text-soft); }
+  .game-emoji { font-size: 2.6rem; display: block; margin-bottom: 6px; }
+  .game-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 4px; }
+  .game-desc { font-size: 0.85rem; color: var(--text-soft); }
 
-  /* Top bar inside a game */
   .game-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
   }
   .back-btn, .reset-btn {
-    background: var(--card-bg);
-    border: none;
-    border-radius: 16px;
-    padding: 10px 18px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--text);
-    box-shadow: 0 4px 0 var(--shadow);
-    cursor: pointer;
-    font-family: inherit;
+    background: var(--card-bg); border: none; border-radius: 16px; padding: 10px 18px;
+    font-size: 1rem; font-weight: bold; color: var(--text); box-shadow: 0 4px 0 var(--shadow);
+    cursor: pointer; font-family: inherit;
   }
   .back-btn:active, .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--shadow); }
   .score-pill {
-    background: var(--accent3);
-    color: #3a2e00;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-size: 1rem;
+    background: var(--accent3); color: #3a2e00; font-weight: bold;
+    padding: 8px 16px; border-radius: 999px; font-size: 1rem;
   }
 
-  /* Level selector */
-  .level-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-  .level-label {
-    color: var(--text-soft);
-    font-weight: bold;
-    margin-right: 4px;
-    font-size: 0.95rem;
-  }
+  .level-bar { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .level-label { color: var(--text-soft); font-weight: bold; margin-right: 4px; font-size: 0.9rem; }
   .level-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: none;
-    background: var(--card-bg);
-    color: var(--text);
-    font-weight: bold;
-    font-size: 1rem;
-    box-shadow: 0 4px 0 var(--shadow);
-    cursor: pointer;
-    font-family: inherit;
+    width: 34px; height: 34px; border-radius: 50%; border: none; background: var(--card-bg);
+    color: var(--text); font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 0 var(--shadow);
+    cursor: pointer; font-family: inherit;
   }
-  .level-btn.active {
-    background: var(--accent1);
-    color: white;
-  }
+  .level-btn.active { background: var(--accent1); color: white; }
   .level-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--shadow); }
 
-  @keyframes bob {
-    0%, 100% { margin-top: 0px; }
-    50% { margin-top: -16px; }
+  @keyframes bob { 0%, 100% { margin-top: 0px; } 50% { margin-top: -16px; } }
+  .bubble.drift, .balloon.drift { animation: bob 1.5s ease-in-out infinite; }
+  @keyframes drift2d {
+    0%, 100% { transform: translate(0,0); } 25% { transform: translate(10px,-8px); }
+    50% { transform: translate(-6px,10px); } 75% { transform: translate(-10px,-6px); }
   }
-  .bubble.drift, .balloon.drift {
-    animation: bob 1.5s ease-in-out infinite;
-  }
+  .hover-target.moving { animation: drift2d 3s ease-in-out infinite; }
 
-  /* Game 1: Click bubbles */
-  .bubble-field {
-    position: relative;
-    height: 420px;
-    background: var(--card-bg);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 8px 0 var(--shadow);
-  }
+  .instructions { text-align: center; font-size: 1.05rem; color: var(--text-soft); margin-bottom: 14px; }
+
+  /* Bubbles */
+  .bubble-field { position: relative; height: 420px; background: var(--card-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 0 var(--shadow); }
   .bubble {
-    position: absolute;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    color: white;
-    box-shadow: inset -6px -6px 10px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.2);
-    transition: transform .08s ease;
+    position: absolute; border-radius: 50%; border: none; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; font-size: 1.4rem; color: white;
+    box-shadow: inset -6px -6px 10px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.2); transition: transform .08s ease;
   }
   .bubble:active { transform: scale(0.85); }
-  .pop-msg {
-    position: absolute;
-    font-weight: bold;
-    font-size: 1.4rem;
-    color: var(--accent1);
-    pointer-events: none;
-    animation: floatup 0.7s ease forwards;
-  }
-  @keyframes floatup {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-40px); }
-  }
+  .pop-msg { position: absolute; font-weight: bold; font-size: 1.4rem; color: var(--accent1); pointer-events: none; animation: floatup 0.7s ease forwards; }
+  @keyframes floatup { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-40px); } }
 
-  /* Game 2: Drag and drop */
-  .drag-area {
-    background: var(--card-bg);
-    border-radius: 24px;
-    box-shadow: 0 8px 0 var(--shadow);
-    padding: 20px;
-    min-height: 420px;
-    position: relative;
-  }
-  .drop-zones {
-    display: flex;
-    justify-content: space-around;
-    gap: 12px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-  }
+  /* Drag match */
+  .drag-area { background: var(--card-bg); border-radius: 24px; box-shadow: 0 8px 0 var(--shadow); padding: 20px; min-height: 420px; position: relative; }
+  .drop-zones { display: flex; justify-content: space-around; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
   .drop-zone {
-    width: 100px;
-    height: 100px;
-    border: 4px dashed var(--text-soft);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    background: rgba(0,0,0,0.03);
+    border: 4px dashed var(--text-soft); border-radius: 20px; display: flex; align-items: center;
+    justify-content: center; font-size: 2.2rem; background: rgba(0,0,0,0.03);
   }
   .drop-zone.filled { border-style: solid; border-color: var(--accent5); background: rgba(107,203,119,0.15); }
   .drop-zone.hover { border-color: var(--accent2); background: rgba(78,205,196,0.15); }
-  .drag-items {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
+  .drag-items { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
   .drag-item {
-    width: 90px;
-    height: 90px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.4rem;
-    cursor: grab;
-    box-shadow: 0 4px 0 var(--shadow);
-    touch-action: none;
-    user-select: none;
+    width: 90px; height: 90px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
+    font-size: 2.4rem; cursor: grab; box-shadow: 0 4px 0 var(--shadow); touch-action: none; user-select: none;
   }
   .drag-item.dragging { opacity: 0.5; cursor: grabbing; }
   .drag-item.placed { visibility: hidden; }
 
-  /* Game 3: Double click balloons */
-  .balloon-field {
-    position: relative;
-    height: 420px;
-    background: var(--card-bg);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 8px 0 var(--shadow);
-  }
+  /* Balloons */
+  .balloon-field { position: relative; height: 420px; background: var(--card-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 0 var(--shadow); }
   .balloon {
-    position: absolute;
-    width: 70px;
-    height: 90px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    cursor: pointer;
-    box-shadow: inset -8px -8px 12px rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,0.85);
-    font-size: 0.85rem;
-    font-weight: bold;
-    transition: transform .1s ease;
+    position: absolute; width: 70px; height: 90px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    cursor: pointer; box-shadow: inset -8px -8px 12px rgba(0,0,0,0.15); display: flex; align-items: center;
+    justify-content: center; color: rgba(255,255,255,0.85); font-size: 0.85rem; font-weight: bold; transition: transform .1s ease;
   }
-  .balloon::after {
-    content: "";
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    width: 2px;
-    height: 18px;
-    background: var(--text-soft);
-  }
+  .balloon::after { content: ""; position: absolute; bottom: -18px; left: 50%; width: 2px; height: 18px; background: var(--text-soft); }
   .balloon:active { transform: scale(0.95); }
   .balloon.armed { outline: 4px solid var(--accent3); }
 
-  /* Game 4: Scroll */
-  .scroll-progress-track {
-    height: 14px;
-    border-radius: 999px;
-    background: rgba(0,0,0,0.08);
-    overflow: hidden;
-    margin-bottom: 14px;
-  }
-  .scroll-progress-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--accent5), var(--accent2));
-    transition: width .1s linear;
-  }
+  /* Scroll */
+  .scroll-progress-track { height: 14px; border-radius: 999px; background: rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 14px; }
+  .scroll-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent5), var(--accent2)); transition: width .1s linear; }
   .scroll-field {
-    height: 420px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-radius: 24px;
-    box-shadow: 0 8px 0 var(--shadow);
+    height: 420px; overflow-y: auto; overflow-x: hidden; border-radius: 24px; box-shadow: 0 8px 0 var(--shadow);
     background: linear-gradient(180deg, #bfe8ff 0%, #bfe8ff 10%, #dff5c8 55%, #8b5e34 100%);
-    -webkit-overflow-scrolling: touch;
-    position: relative;
+    -webkit-overflow-scrolling: touch; position: relative;
   }
-  .scroll-content {
-    position: relative;
-    width: 100%;
-    height: 1800px;
-  }
-  .tree-trunk {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 46px;
-    height: 100%;
-    background: #7a4f2b;
-    transform: translateX(-50%);
-    border-radius: 10px;
-  }
+  .scroll-content { position: relative; width: 100%; height: 1800px; }
+  .tree-trunk { position: absolute; left: 50%; top: 0; width: 46px; height: 100%; background: #7a4f2b; transform: translateX(-50%); border-radius: 10px; }
   .acorn {
-    position: absolute;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    border: none;
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffd93d;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-    cursor: pointer;
+    position: absolute; border-radius: 50%; border: none; font-size: 1.8rem; display: flex; align-items: center;
+    justify-content: center; background: #ffd93d; box-shadow: 0 4px 0 rgba(0,0,0,0.2); cursor: pointer;
   }
   .acorn:active { transform: scale(0.85); }
-  .acorn.found { display: none; }
   .treasure-note {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--card-bg);
-    padding: 10px 18px;
-    border-radius: 14px;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 4px 0 var(--shadow);
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--card-bg);
+    padding: 10px 18px; border-radius: 14px; font-weight: bold; text-align: center; box-shadow: 0 4px 0 var(--shadow);
   }
   .scroll-hint {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.85);
-    color: #2b2b3a;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-weight: bold;
-    font-size: 0.9rem;
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85);
+    color: #2b2b3a; padding: 6px 14px; border-radius: 999px; font-weight: bold; font-size: 0.9rem;
   }
 
-  /* Game 5: Text selection */
-  .select-area {
-    background: var(--card-bg);
-    border-radius: 24px;
-    box-shadow: 0 8px 0 var(--shadow);
-    padding: 30px 20px;
-    min-height: 300px;
-    text-align: center;
-  }
-  .select-target {
-    font-size: 1.2rem;
-    color: var(--text-soft);
-    margin-bottom: 26px;
-  }
-  #selectTargetWord {
-    font-weight: bold;
-    color: var(--accent1);
-    font-size: 1.5rem;
-    background: rgba(255,107,107,0.12);
-    padding: 2px 12px;
-    border-radius: 10px;
-  }
-  .select-line {
-    font-size: 2rem;
-    letter-spacing: 2px;
-    line-height: 2.4;
-    user-select: text;
-    -webkit-user-select: text;
-    cursor: text;
-    margin-bottom: 20px;
-  }
-  .select-line .word {
-    padding: 2px 4px;
-    border-radius: 6px;
-  }
-  .select-line .word.correct {
-    background: var(--accent5);
-    color: white;
-  }
-  .select-feedback {
-    min-height: 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--accent5);
-  }
+  /* Text select */
+  .select-area { background: var(--card-bg); border-radius: 24px; box-shadow: 0 8px 0 var(--shadow); padding: 30px 20px; min-height: 300px; text-align: center; }
+  .select-target { font-size: 1.2rem; color: var(--text-soft); margin-bottom: 26px; }
+  #selectTargetWord { font-weight: bold; color: var(--accent1); font-size: 1.5rem; background: rgba(255,107,107,0.12); padding: 2px 12px; border-radius: 10px; }
+  .select-line { font-size: 1.8rem; letter-spacing: 2px; line-height: 2.4; user-select: text; -webkit-user-select: text; cursor: text; margin-bottom: 20px; }
+  .select-line .word.correct { background: var(--accent5); color: white; padding: 2px 4px; border-radius: 6px; }
+  .select-feedback { min-height: 30px; font-size: 1.2rem; font-weight: bold; color: var(--accent5); }
 
-  .celebrate {
-    text-align: center;
-    padding: 60px 20px;
-    background: var(--card-bg);
-    border-radius: 24px;
-    box-shadow: 0 8px 0 var(--shadow);
+  /* Right-click explorer */
+  .rc-field { position: relative; height: 420px; background: var(--card-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 0 var(--shadow); }
+  .rc-icon {
+    position: absolute; width: 74px; height: 74px; border-radius: 16px; background: rgba(0,0,0,0.04);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem;
+    cursor: context-menu; user-select: none; transition: opacity .3s ease, transform .3s ease;
   }
+  .rc-icon .rc-label { font-size: 0.65rem; color: var(--text-soft); margin-top: 2px; }
+  .rc-icon.done { opacity: 0; transform: scale(1.3); pointer-events: none; }
+  .rc-icon.shake { animation: shake .3s; }
+  @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+  .context-menu {
+    position: absolute; background: var(--card-bg); border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35); overflow: hidden; z-index: 50; min-width: 140px;
+  }
+  .context-menu button {
+    display: block; width: 100%; padding: 10px 14px; background: none; border: none; text-align: left;
+    font-size: 1rem; font-family: inherit; color: var(--text); cursor: pointer;
+  }
+  .context-menu button:hover, .context-menu button:active { background: rgba(0,0,0,0.08); }
+
+  /* Hover hunt */
+  .hover-field { position: relative; height: 420px; background: var(--card-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 0 var(--shadow); }
+  .hover-target { position: absolute; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: white; cursor: pointer; }
+  .hover-target.done { opacity: 0; transform: scale(1.3); transition: all .3s ease; }
+
+  /* Press and hold */
+  .hold-field { position: relative; height: 420px; background: var(--card-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 0 var(--shadow); }
+  .hold-btn { position: absolute; border-radius: 50%; border: none; overflow: hidden; cursor: pointer; color: white; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; }
+  .hold-fill { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(255,255,255,0.45); height: 0%; }
+  .hold-btn.done { opacity: 0; transform: scale(1.3); transition: all .3s ease; }
+
+  /* Slider */
+  .slider-area { background: var(--card-bg); border-radius: 24px; box-shadow: 0 8px 0 var(--shadow); padding: 30px 20px; min-height: 300px; text-align: center; }
+  .slider-track-wrap { position: relative; margin: 50px auto 20px; max-width: 480px; }
+  .slider-track-bg { position: relative; height: 16px; border-radius: 8px; background: rgba(0,0,0,0.08); }
+  .slider-zone { position: absolute; top: 0; height: 100%; background: var(--accent5); opacity: 0.55; border-radius: 8px; }
+  input[type=range].slider-input { width: 100%; position: relative; margin-top: -16px; }
+  .slider-progress-track { margin-top: 24px; height: 14px; border-radius: 999px; background: rgba(0,0,0,0.08); overflow: hidden; }
+  .slider-progress-fill { height: 100%; width: 0%; background: var(--accent2); transition: width .1s linear; }
+
+  /* Reorder */
+  .reorder-area { background: var(--card-bg); border-radius: 24px; box-shadow: 0 8px 0 var(--shadow); padding: 20px; min-height: 420px; }
+  .reorder-list { display: flex; flex-direction: column; gap: 8px; max-width: 360px; margin: 0 auto; }
+  .reorder-item {
+    display: flex; align-items: center; justify-content: center; border-radius: 14px; font-weight: bold;
+    color: white; cursor: grab; box-shadow: 0 4px 0 var(--shadow); touch-action: none;
+  }
+  .reorder-item.dragging { opacity: 0.4; }
+  .reorder-item.correct-flash { outline: 4px solid var(--accent5); }
+
+  .celebrate { text-align: center; padding: 60px 20px; background: var(--card-bg); border-radius: 24px; box-shadow: 0 8px 0 var(--shadow); }
   .celebrate .big-emoji { font-size: 4rem; display: block; margin-bottom: 12px; }
   .celebrate h2 { color: var(--accent5); margin: 0 0 8px; font-size: 1.8rem; }
   .celebrate p { color: var(--text-soft); margin-bottom: 20px; }
   .play-again-btn {
-    background: var(--accent5);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    padding: 14px 28px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-    font-family: inherit;
+    background: var(--accent5); color: white; border: none; border-radius: 16px; padding: 14px 28px;
+    font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.2); font-family: inherit;
   }
   .play-again-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
-
-  .instructions {
-    text-align: center;
-    font-size: 1.05rem;
-    color: var(--text-soft);
-    margin-bottom: 14px;
-  }
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <h1>🖱️ Mouse Practice!</h1>
-    <p class="subtitle">Click, drag, and double-click to play!</p>
+    <p class="subtitle">10 games. 10 levels each. Pick one and play!</p>
   </header>
 
-  <!-- MENU -->
   <section id="menu" class="screen active">
     <div class="menu-grid">
-      <button class="game-card" onclick="showScreen('bubbles')">
-        <span class="game-emoji">🫧</span>
-        <div class="game-title">Pop the Bubbles</div>
-        <div class="game-desc">Click each bubble to pop it</div>
-      </button>
-      <button class="game-card" onclick="showScreen('drag')">
-        <span class="game-emoji">⭐</span>
-        <div class="game-title">Drag it Home</div>
-        <div class="game-desc">Drag shapes into the matching box</div>
-      </button>
-      <button class="game-card" onclick="showScreen('balloons')">
-        <span class="game-emoji">🎈</span>
-        <div class="game-title">Double-Click Balloons</div>
-        <div class="game-desc">Click twice fast to pop!</div>
-      </button>
-      <button class="game-card" onclick="showScreen('scroll')">
-        <span class="game-emoji">🐿️</span>
-        <div class="game-title">Scroll for Acorns</div>
-        <div class="game-desc">Scroll down and click every acorn</div>
-      </button>
-      <button class="game-card" onclick="showScreen('textselect')">
-        <span class="game-emoji">🖍️</span>
-        <div class="game-title">Highlight the Word</div>
-        <div class="game-desc">Click and drag over the matching word</div>
-      </button>
+      <button class="game-card" onclick="showScreen('bubbles')"><span class="game-emoji">🫧</span><div class="game-title">Pop the Bubbles</div><div class="game-desc">Click each bubble to pop it</div></button>
+      <button class="game-card" onclick="showScreen('drag')"><span class="game-emoji">⭐</span><div class="game-title">Drag it Home</div><div class="game-desc">Drag shapes to the matching box</div></button>
+      <button class="game-card" onclick="showScreen('balloons')"><span class="game-emoji">🎈</span><div class="game-title">Double-Click Balloons</div><div class="game-desc">Click twice fast to pop!</div></button>
+      <button class="game-card" onclick="showScreen('scroll')"><span class="game-emoji">🐿️</span><div class="game-title">Scroll for Acorns</div><div class="game-desc">Scroll down and click every acorn</div></button>
+      <button class="game-card" onclick="showScreen('textselect')"><span class="game-emoji">🖍️</span><div class="game-title">Highlight the Word</div><div class="game-desc">Click and drag over the matching word</div></button>
+      <button class="game-card" onclick="showScreen('rightclick')"><span class="game-emoji">🖱️</span><div class="game-title">Right-Click Explorer</div><div class="game-desc">Right-click and choose "Open"</div></button>
+      <button class="game-card" onclick="showScreen('hover')"><span class="game-emoji">🎯</span><div class="game-title">Hover Hunt</div><div class="game-desc">Hold your pointer steady on target</div></button>
+      <button class="game-card" onclick="showScreen('hold')"><span class="game-emoji">✋</span><div class="game-title">Charge It Up</div><div class="game-desc">Press and hold to fill the button</div></button>
+      <button class="game-card" onclick="showScreen('slider')"><span class="game-emoji">🎚️</span><div class="game-title">Slide to the Spot</div><div class="game-desc">Drag the slider into the green zone</div></button>
+      <button class="game-card" onclick="showScreen('reorder')"><span class="game-emoji">🔢</span><div class="game-title">Line Them Up</div><div class="game-desc">Drag numbers into the right order</div></button>
     </div>
   </section>
 
-  <!-- GAME 1: BUBBLES -->
   <section id="bubbles" class="screen">
-    <div class="game-bar">
-      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
-      <div class="score-pill">Popped: <span id="bubbleScore">0</span> / <span id="bubbleTotal">10</span></div>
-      <button class="reset-btn" onclick="startBubbles()">🔄 Restart</button>
-    </div>
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Popped: <span id="bubbleScore">0</span> / <span id="bubbleTotal">6</span></div><button class="reset-btn" onclick="startBubbles()">🔄 Restart</button></div>
     <p class="instructions">Click on every bubble before they float away!</p>
-    <div class="level-bar" id="bubblesLevelBar">
-      <span class="level-label">Level:</span>
-      <button class="level-btn" data-level="1" onclick="playLevel('bubbles',1)">1</button>
-      <button class="level-btn" data-level="2" onclick="playLevel('bubbles',2)">2</button>
-      <button class="level-btn" data-level="3" onclick="playLevel('bubbles',3)">3</button>
-      <button class="level-btn" data-level="4" onclick="playLevel('bubbles',4)">4</button>
-      <button class="level-btn" data-level="5" onclick="playLevel('bubbles',5)">5</button>
-    </div>
+    <div class="level-bar" id="bubblesLevelBar"></div>
     <div class="bubble-field" id="bubbleField"></div>
   </section>
 
-  <!-- GAME 2: DRAG -->
   <section id="drag" class="screen">
-    <div class="game-bar">
-      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
-      <div class="score-pill">Placed: <span id="dragScore">0</span> / <span id="dragTotal">5</span></div>
-      <button class="reset-btn" onclick="startDrag()">🔄 Restart</button>
-    </div>
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Placed: <span id="dragScore">0</span> / <span id="dragTotal">3</span></div><button class="reset-btn" onclick="startDrag()">🔄 Restart</button></div>
     <p class="instructions">Press and drag each shape into the box with the same color!</p>
-    <div class="level-bar" id="dragLevelBar">
-      <span class="level-label">Level:</span>
-      <button class="level-btn" data-level="1" onclick="playLevel('drag',1)">1</button>
-      <button class="level-btn" data-level="2" onclick="playLevel('drag',2)">2</button>
-      <button class="level-btn" data-level="3" onclick="playLevel('drag',3)">3</button>
-      <button class="level-btn" data-level="4" onclick="playLevel('drag',4)">4</button>
-      <button class="level-btn" data-level="5" onclick="playLevel('drag',5)">5</button>
-    </div>
-    <div class="drag-area">
-      <div class="drop-zones" id="dropZones"></div>
-      <div class="drag-items" id="dragItems"></div>
-    </div>
+    <div class="level-bar" id="dragLevelBar"></div>
+    <div class="drag-area"><div class="drop-zones" id="dropZones"></div><div class="drag-items" id="dragItems"></div></div>
   </section>
 
-  <!-- GAME 3: BALLOONS -->
   <section id="balloons" class="screen">
-    <div class="game-bar">
-      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
-      <div class="score-pill">Popped: <span id="balloonScore">0</span> / <span id="balloonTotal">8</span></div>
-      <button class="reset-btn" onclick="startBalloons()">🔄 Restart</button>
-    </div>
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Popped: <span id="balloonScore">0</span> / <span id="balloonTotal">4</span></div><button class="reset-btn" onclick="startBalloons()">🔄 Restart</button></div>
     <p class="instructions">Click TWO times fast on a balloon to pop it!</p>
-    <div class="level-bar" id="balloonsLevelBar">
-      <span class="level-label">Level:</span>
-      <button class="level-btn" data-level="1" onclick="playLevel('balloons',1)">1</button>
-      <button class="level-btn" data-level="2" onclick="playLevel('balloons',2)">2</button>
-      <button class="level-btn" data-level="3" onclick="playLevel('balloons',3)">3</button>
-      <button class="level-btn" data-level="4" onclick="playLevel('balloons',4)">4</button>
-      <button class="level-btn" data-level="5" onclick="playLevel('balloons',5)">5</button>
-    </div>
+    <div class="level-bar" id="balloonsLevelBar"></div>
     <div class="balloon-field" id="balloonField"></div>
   </section>
 
-  <!-- GAME 4: SCROLL -->
   <section id="scroll" class="screen">
-    <div class="game-bar">
-      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
-      <div class="score-pill">Acorns: <span id="scrollScore">0</span> / <span id="scrollTotal">6</span></div>
-      <button class="reset-btn" onclick="startScroll()">🔄 Restart</button>
-    </div>
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Acorns: <span id="scrollScore">0</span> / <span id="scrollTotal">3</span></div><button class="reset-btn" onclick="startScroll()">🔄 Restart</button></div>
     <p class="instructions">Scroll down the tree and click every acorn you find!</p>
-    <div class="level-bar" id="scrollLevelBar">
-      <span class="level-label">Level:</span>
-      <button class="level-btn" data-level="1" onclick="playLevel('scroll',1)">1</button>
-      <button class="level-btn" data-level="2" onclick="playLevel('scroll',2)">2</button>
-      <button class="level-btn" data-level="3" onclick="playLevel('scroll',3)">3</button>
-      <button class="level-btn" data-level="4" onclick="playLevel('scroll',4)">4</button>
-      <button class="level-btn" data-level="5" onclick="playLevel('scroll',5)">5</button>
-    </div>
+    <div class="level-bar" id="scrollLevelBar"></div>
     <div class="scroll-progress-track"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
-    <div class="scroll-field" id="scrollField">
-      <div class="scroll-content" id="scrollContent"></div>
-    </div>
+    <div class="scroll-field" id="scrollField"><div class="scroll-content" id="scrollContent"></div></div>
   </section>
 
-  <!-- GAME 5: TEXT SELECTION -->
   <section id="textselect" class="screen">
-    <div class="game-bar">
-      <button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button>
-      <div class="score-pill">Found: <span id="selectScore">0</span> / <span id="selectTotal">5</span></div>
-      <button class="reset-btn" onclick="startTextSelect()">🔄 Restart</button>
-    </div>
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Found: <span id="selectScore">0</span> / <span id="selectTotal">3</span></div><button class="reset-btn" onclick="startTextSelect()">🔄 Restart</button></div>
     <p class="instructions">Press the mouse down before the word, drag across it, then let go!</p>
-    <div class="level-bar" id="textselectLevelBar">
-      <span class="level-label">Level:</span>
-      <button class="level-btn" data-level="1" onclick="playLevel('textselect',1)">1</button>
-      <button class="level-btn" data-level="2" onclick="playLevel('textselect',2)">2</button>
-      <button class="level-btn" data-level="3" onclick="playLevel('textselect',3)">3</button>
-      <button class="level-btn" data-level="4" onclick="playLevel('textselect',4)">4</button>
-      <button class="level-btn" data-level="5" onclick="playLevel('textselect',5)">5</button>
-    </div>
-    <div class="select-area">
-      <div class="select-target" id="selectTarget">Find: <span id="selectTargetWord">word</span></div>
-      <div class="select-line" id="selectLine"></div>
-      <div class="select-feedback" id="selectFeedback">&nbsp;</div>
+    <div class="level-bar" id="textselectLevelBar"></div>
+    <div class="select-area"><div class="select-target">Find: <span id="selectTargetWord">word</span></div><div class="select-line" id="selectLine"></div><div class="select-feedback" id="selectFeedback">&nbsp;</div></div>
+  </section>
+
+  <section id="rightclick" class="screen">
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Opened: <span id="rcScore">0</span> / <span id="rcTotal">3</span></div><button class="reset-btn" onclick="startRightclick()">🔄 Restart</button></div>
+    <p class="instructions">Right-click each icon, then click "Open" in the menu that pops up!</p>
+    <div class="level-bar" id="rightclickLevelBar"></div>
+    <div class="rc-field" id="rcField"></div>
+  </section>
+
+  <section id="hover" class="screen">
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Steady: <span id="hoverScore">0</span> / <span id="hoverTotal">3</span></div><button class="reset-btn" onclick="startHover()">🔄 Restart</button></div>
+    <p class="instructions">Keep your pointer inside each circle until the ring fills up!</p>
+    <div class="level-bar" id="hoverLevelBar"></div>
+    <div class="hover-field" id="hoverField"></div>
+  </section>
+
+  <section id="hold" class="screen">
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Charged: <span id="holdScore">0</span> / <span id="holdTotal">3</span></div><button class="reset-btn" onclick="startHold()">🔄 Restart</button></div>
+    <p class="instructions">Press down on a button and hold it until it fills all the way up!</p>
+    <div class="level-bar" id="holdLevelBar"></div>
+    <div class="hold-field" id="holdField"></div>
+  </section>
+
+  <section id="slider" class="screen">
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">Round: <span id="sliderScore">0</span> / <span id="sliderTotal">3</span></div><button class="reset-btn" onclick="startSlider()">🔄 Restart</button></div>
+    <p class="instructions">Drag the slider into the green zone and hold it there!</p>
+    <div class="level-bar" id="sliderLevelBar"></div>
+    <div class="slider-area">
+      <div class="slider-track-wrap">
+        <div class="slider-track-bg"><div class="slider-zone" id="sliderZone"></div></div>
+        <input type="range" min="0" max="100" value="50" class="slider-input" id="sliderInput">
+      </div>
+      <div class="slider-progress-track"><div class="slider-progress-fill" id="sliderProgressFill"></div></div>
     </div>
   </section>
 
-  <!-- WIN SCREEN -->
+  <section id="reorder" class="screen">
+    <div class="game-bar"><button class="back-btn" onclick="showScreen('menu')">⬅ Menu</button><div class="score-pill">In order: <span id="reorderScore">0</span> / <span id="reorderTotal">3</span></div><button class="reset-btn" onclick="startReorder()">🔄 Restart</button></div>
+    <p class="instructions">Drag numbers to swap them until they're in order, smallest to largest!</p>
+    <div class="level-bar" id="reorderLevelBar"></div>
+    <div class="reorder-area"><div class="reorder-list" id="reorderList"></div></div>
+  </section>
+
   <section id="win" class="screen">
     <div class="celebrate">
       <span class="big-emoji">🏆</span>
@@ -611,15 +341,11 @@
 </div>
 
 <script>
-const colors = ['#ff6b6b','#4ecdc4','#ffd93d','#a78bfa','#6bcb77','#5aa9e6','#ff9f5b','#e685c9'];
+const LEVEL_COUNT = 10;
+const colors = ['#ff6b6b','#4ecdc4','#ffd93d','#a78bfa','#6bcb77','#5aa9e6','#ff9f5b','#e685c9','#7ed957','#5bc0de'];
 
-// Global play state: which game is active, and which level (1-5) each
-// game is currently set to. Levels are NOT saved between page loads —
-// every visit starts back at Level 1.
-const state = {
-  game: null,
-  level: { bubbles: 1, drag: 1, balloons: 1, scroll: 1, textselect: 1 }
-};
+const state = { game: null, level: {} };
+['bubbles','drag','balloons','scroll','textselect','rightclick','hover','hold','slider','reorder'].forEach(g => state.level[g] = 1);
 
 function shuffle(arr) {
   const a = [...arr];
@@ -631,12 +357,25 @@ function shuffle(arr) {
 }
 
 const GAME_START = {
-  bubbles: startBubbles,
-  drag: startDrag,
-  balloons: startBalloons,
-  scroll: startScroll,
-  textselect: startTextSelect
+  bubbles: startBubbles, drag: startDrag, balloons: startBalloons, scroll: startScroll,
+  textselect: startTextSelect, rightclick: startRightclick, hover: startHover,
+  hold: startHold, slider: startSlider, reorder: startReorder
 };
+
+function buildLevelBar(gameId) {
+  const bar = document.getElementById(gameId + 'LevelBar');
+  if (!bar) return;
+  bar.innerHTML = '<span class="level-label">Level:</span>';
+  for (let i = 1; i <= LEVEL_COUNT; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'level-btn';
+    btn.dataset.level = i;
+    btn.textContent = i;
+    btn.onclick = () => playLevel(gameId, i);
+    bar.appendChild(btn);
+  }
+}
+Object.keys(GAME_START).forEach(buildLevelBar);
 
 function updateLevelBar(gameId) {
   const bar = document.getElementById(gameId + 'LevelBar');
@@ -656,55 +395,47 @@ function playLevel(gameId, level) {
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if (GAME_START[id]) {
-    playLevel(id, state.level[id]);
-  }
+  if (GAME_START[id]) playLevel(id, state.level[id]);
 }
 
 function winGame(text) {
   const gameId = state.game;
   const level = state.level[gameId];
-  document.getElementById('winLevelLine').textContent = `Level ${level} of 5 complete!`;
+  document.getElementById('winLevelLine').textContent = `Level ${level} of ${LEVEL_COUNT} complete!`;
   document.getElementById('winText').textContent = text;
   const nextBtn = document.getElementById('nextLevelBtn');
-  nextBtn.style.display = level < 5 ? 'inline-block' : 'none';
+  nextBtn.style.display = level < LEVEL_COUNT ? 'inline-block' : 'none';
   setTimeout(() => showScreen('win'), 500);
 }
 
 function nextLevelClick() {
   const gameId = state.game;
-  const next = Math.min(5, state.level[gameId] + 1);
+  const next = Math.min(LEVEL_COUNT, state.level[gameId] + 1);
   state.level[gameId] = next;
   showScreen(gameId);
 }
 
-/* ---------- GAME 1: BUBBLES ---------- */
+/* ---------- 1. BUBBLES ---------- */
 const BUBBLE_LEVELS = [
-  { count: 6,  minSize: 65, maxSize: 95, drift: false },
-  { count: 9,  minSize: 58, maxSize: 85, drift: false },
-  { count: 13, minSize: 50, maxSize: 75, drift: true  },
-  { count: 17, minSize: 42, maxSize: 65, drift: true  },
-  { count: 22, minSize: 36, maxSize: 55, drift: true  }
+  {count:5,minSize:70,maxSize:100,drift:false},{count:7,minSize:65,maxSize:95,drift:false},
+  {count:9,minSize:60,maxSize:90,drift:false},{count:11,minSize:55,maxSize:85,drift:false},
+  {count:13,minSize:50,maxSize:80,drift:false},{count:15,minSize:46,maxSize:75,drift:true},
+  {count:17,minSize:42,maxSize:70,drift:true},{count:19,minSize:38,maxSize:64,drift:true},
+  {count:21,minSize:34,maxSize:58,drift:true},{count:24,minSize:30,maxSize:52,drift:true}
 ];
-let bubblePopped = 0;
-let bubbleTotalCount = 6;
-
+let bubblePopped = 0, bubbleTotalCount = 5;
 function startBubbles() {
   const cfg = BUBBLE_LEVELS[state.level.bubbles - 1];
-  bubblePopped = 0;
-  bubbleTotalCount = cfg.count;
+  bubblePopped = 0; bubbleTotalCount = cfg.count;
   document.getElementById('bubbleScore').textContent = 0;
   document.getElementById('bubbleTotal').textContent = bubbleTotalCount;
-  const field = document.getElementById('bubbleField');
-  field.innerHTML = '';
-  const fw = field.clientWidth || 700;
-  const fh = 420;
+  const field = document.getElementById('bubbleField'); field.innerHTML = '';
+  const fw = field.clientWidth || 700, fh = 420;
   for (let i = 0; i < bubbleTotalCount; i++) {
     const size = cfg.minSize + Math.random() * (cfg.maxSize - cfg.minSize);
     const btn = document.createElement('button');
     btn.className = 'bubble' + (cfg.drift ? ' drift' : '');
-    btn.style.width = size + 'px';
-    btn.style.height = size + 'px';
+    btn.style.width = size + 'px'; btn.style.height = size + 'px';
     btn.style.left = Math.random() * (fw - size) + 'px';
     btn.style.top = Math.random() * (fh - size) + 'px';
     if (cfg.drift) btn.style.animationDelay = (-Math.random() * 1.5) + 's';
@@ -714,360 +445,222 @@ function startBubbles() {
     field.appendChild(btn);
   }
 }
-
 function popBubble(btn) {
   const field = document.getElementById('bubbleField');
   const msg = document.createElement('div');
-  msg.className = 'pop-msg';
-  msg.textContent = 'Pop!';
-  msg.style.left = btn.style.left;
-  msg.style.top = btn.style.top;
-  field.appendChild(msg);
-  setTimeout(() => msg.remove(), 700);
-  btn.remove();
-  bubblePopped++;
+  msg.className = 'pop-msg'; msg.textContent = 'Pop!';
+  msg.style.left = btn.style.left; msg.style.top = btn.style.top;
+  field.appendChild(msg); setTimeout(() => msg.remove(), 700);
+  btn.remove(); bubblePopped++;
   document.getElementById('bubbleScore').textContent = bubblePopped;
-  if (bubblePopped >= bubbleTotalCount) {
-    winGame('You popped all the bubbles! 🫧');
-  }
+  if (bubblePopped >= bubbleTotalCount) winGame('You popped all the bubbles! 🫧');
 }
 
-/* ---------- GAME 2: DRAG AND DROP ---------- */
-const shapePool = ['⭐','❤️','🔵','🟢','🔺','🟣','🟠','🔶'];
+/* ---------- 2. DRAG AND DROP ---------- */
+const shapePool = ['⭐','❤️','🔵','🟢','🔺','🟣','🟠','🔶','🟡','🟤'];
 const DRAG_LEVELS = [
-  { count: 3, zoneSize: 120 },
-  { count: 4, zoneSize: 110 },
-  { count: 5, zoneSize: 100 },
-  { count: 6, zoneSize: 90  },
-  { count: 8, zoneSize: 80  }
+  {count:3,zoneSize:130},{count:4,zoneSize:120},{count:5,zoneSize:110},{count:5,zoneSize:105},
+  {count:6,zoneSize:100},{count:6,zoneSize:95},{count:7,zoneSize:88},{count:7,zoneSize:82},
+  {count:8,zoneSize:76},{count:10,zoneSize:70}
 ];
-let dragPlaced = 0;
-let dragTotalCount = 3;
-let shapeEmojis = shapePool.slice(0, 3);
-
+let dragPlaced = 0, dragTotalCount = 3, shapeEmojis = shapePool.slice(0, 3);
 function startDrag() {
   const cfg = DRAG_LEVELS[state.level.drag - 1];
-  dragPlaced = 0;
-  dragTotalCount = cfg.count;
+  dragPlaced = 0; dragTotalCount = cfg.count;
   shapeEmojis = shuffle(shapePool).slice(0, dragTotalCount);
   document.getElementById('dragScore').textContent = 0;
   document.getElementById('dragTotal').textContent = dragTotalCount;
-
-  const zonesEl = document.getElementById('dropZones');
-  const itemsEl = document.getElementById('dragItems');
-  zonesEl.innerHTML = '';
-  itemsEl.innerHTML = '';
-
-  const order = shuffle(shapeEmojis);
-  const colorOrder = colors.slice(0, shapeEmojis.length);
-
+  const zonesEl = document.getElementById('dropZones'), itemsEl = document.getElementById('dragItems');
+  zonesEl.innerHTML = ''; itemsEl.innerHTML = '';
+  const order = shuffle(shapeEmojis), colorOrder = colors.slice(0, shapeEmojis.length);
   shapeEmojis.forEach((emoji, i) => {
     const zone = document.createElement('div');
-    zone.className = 'drop-zone';
-    zone.dataset.match = emoji;
-    zone.style.width = cfg.zoneSize + 'px';
-    zone.style.height = cfg.zoneSize + 'px';
-    zone.style.background = colorOrder[i] + '22';
-    zone.style.borderColor = colorOrder[i];
-    zone.textContent = emoji;
-    zone.style.opacity = '0.35';
+    zone.className = 'drop-zone'; zone.dataset.match = emoji;
+    zone.style.width = cfg.zoneSize + 'px'; zone.style.height = cfg.zoneSize + 'px';
+    zone.style.background = colorOrder[i] + '22'; zone.style.borderColor = colorOrder[i];
+    zone.textContent = emoji; zone.style.opacity = '0.35';
     zonesEl.appendChild(zone);
   });
-
-  order.forEach((emoji, i) => {
+  order.forEach((emoji) => {
     const item = document.createElement('div');
-    item.className = 'drag-item';
-    item.textContent = emoji;
-    item.dataset.emoji = emoji;
+    item.className = 'drag-item'; item.textContent = emoji; item.dataset.emoji = emoji;
     const colorIdx = shapeEmojis.indexOf(emoji);
-    item.style.background = colorOrder[colorIdx];
-    item.draggable = true;
-    setupDragItem(item);
-    itemsEl.appendChild(item);
+    item.style.background = colorOrder[colorIdx]; item.draggable = true;
+    setupDragItem(item); itemsEl.appendChild(item);
   });
-
   setupDropZones();
 }
-
 function setupDragItem(item) {
-  item.addEventListener('dragstart', e => {
-    item.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', item.dataset.emoji);
-  });
+  item.addEventListener('dragstart', e => { item.classList.add('dragging'); e.dataTransfer.setData('text/plain', item.dataset.emoji); });
   item.addEventListener('dragend', () => item.classList.remove('dragging'));
-
-  // Touch support
-  let touchClone = null;
-  item.addEventListener('touchstart', e => {
-    if (item.classList.contains('placed')) return;
-    e.preventDefault();
-    item.classList.add('dragging');
-  }, { passive: false });
+  item.addEventListener('touchstart', e => { if (item.classList.contains('placed')) return; e.preventDefault(); item.classList.add('dragging'); }, { passive: false });
   item.addEventListener('touchmove', e => {
-    if (!item.classList.contains('dragging')) return;
-    e.preventDefault();
+    if (!item.classList.contains('dragging')) return; e.preventDefault();
     const touch = e.touches[0];
-    item.style.position = 'fixed';
-    item.style.left = (touch.clientX - 45) + 'px';
-    item.style.top = (touch.clientY - 45) + 'px';
-    item.style.zIndex = 1000;
+    item.style.position = 'fixed'; item.style.left = (touch.clientX - 45) + 'px'; item.style.top = (touch.clientY - 45) + 'px'; item.style.zIndex = 1000;
     document.querySelectorAll('.drop-zone').forEach(z => {
       const r = z.getBoundingClientRect();
-      const inside = touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom;
-      z.classList.toggle('hover', inside);
+      z.classList.toggle('hover', touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom);
     });
   }, { passive: false });
   item.addEventListener('touchend', e => {
     if (!item.classList.contains('dragging')) return;
     item.classList.remove('dragging');
-    const touch = e.changedTouches[0];
-    let dropped = false;
+    const touch = e.changedTouches[0]; let placed = false;
     document.querySelectorAll('.drop-zone').forEach(z => {
-      const r = z.getBoundingClientRect();
-      z.classList.remove('hover');
+      const r = z.getBoundingClientRect(); z.classList.remove('hover');
       const inside = touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom;
-      if (inside) dropped = true;
-      if (inside && z.dataset.match === item.dataset.emoji && !z.classList.contains('filled')) {
-        placeItem(item, z);
-      }
+      if (inside && z.dataset.match === item.dataset.emoji && !z.classList.contains('filled')) { placeItem(item, z); placed = true; }
     });
-    if (!dropped) resetItemPosition(item);
-    else if (!item.classList.contains('placed')) resetItemPosition(item);
+    if (!placed) resetItemPosition(item);
   });
 }
-
-function resetItemPosition(item) {
-  item.style.position = '';
-  item.style.left = '';
-  item.style.top = '';
-  item.style.zIndex = '';
-}
-
+function resetItemPosition(item) { item.style.position = ''; item.style.left = ''; item.style.top = ''; item.style.zIndex = ''; }
 function setupDropZones() {
   document.querySelectorAll('.drop-zone').forEach(zone => {
-    zone.addEventListener('dragover', e => {
-      e.preventDefault();
-      zone.classList.add('hover');
-    });
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('hover'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('hover'));
     zone.addEventListener('drop', e => {
-      e.preventDefault();
-      zone.classList.remove('hover');
+      e.preventDefault(); zone.classList.remove('hover');
       const emoji = e.dataTransfer.getData('text/plain');
       const item = document.querySelector(`.drag-item[data-emoji="${emoji}"]:not(.placed)`);
-      if (item && zone.dataset.match === emoji && !zone.classList.contains('filled')) {
-        placeItem(item, zone);
-      }
+      if (item && zone.dataset.match === emoji && !zone.classList.contains('filled')) placeItem(item, zone);
     });
   });
 }
-
 function placeItem(item, zone) {
-  zone.classList.add('filled');
-  zone.style.opacity = '1';
-  item.classList.add('placed');
-  resetItemPosition(item);
+  zone.classList.add('filled'); zone.style.opacity = '1';
+  item.classList.add('placed'); resetItemPosition(item);
   dragPlaced++;
   document.getElementById('dragScore').textContent = dragPlaced;
-  if (dragPlaced >= dragTotalCount) {
-    winGame('You matched every shape! ⭐');
-  }
+  if (dragPlaced >= dragTotalCount) winGame('You matched every shape! ⭐');
 }
 
-/* ---------- GAME 3: DOUBLE-CLICK BALLOONS ---------- */
+/* ---------- 3. BALLOONS ---------- */
 const BALLOON_LEVELS = [
-  { count: 5,  window: 650, drift: false },
-  { count: 7,  window: 550, drift: false },
-  { count: 10, window: 480, drift: true  },
-  { count: 13, window: 420, drift: true  },
-  { count: 17, window: 350, drift: true  }
+  {count:4,window:700,drift:false},{count:5,window:650,drift:false},{count:7,window:600,drift:false},
+  {count:8,window:550,drift:false},{count:10,window:500,drift:false},{count:11,window:460,drift:true},
+  {count:13,window:420,drift:true},{count:14,window:390,drift:true},{count:16,window:360,drift:true},
+  {count:18,window:330,drift:true}
 ];
-let balloonPopped = 0;
-let balloonTotalCount = 5;
-
+let balloonPopped = 0, balloonTotalCount = 4;
 function startBalloons() {
   const cfg = BALLOON_LEVELS[state.level.balloons - 1];
-  balloonPopped = 0;
-  balloonTotalCount = cfg.count;
+  balloonPopped = 0; balloonTotalCount = cfg.count;
   document.getElementById('balloonScore').textContent = 0;
   document.getElementById('balloonTotal').textContent = balloonTotalCount;
-  const field = document.getElementById('balloonField');
-  field.innerHTML = '';
-  const fw = field.clientWidth || 700;
-  const fh = 380;
+  const field = document.getElementById('balloonField'); field.innerHTML = '';
+  const fw = field.clientWidth || 700, fh = 380;
   for (let i = 0; i < balloonTotalCount; i++) {
     const b = document.createElement('div');
     b.className = 'balloon' + (cfg.drift ? ' drift' : '');
     if (cfg.drift) b.style.animationDelay = (-Math.random() * 1.5) + 's';
-    b.style.left = Math.random() * (fw - 90) + 20 + 'px';
-    b.style.top = Math.random() * (fh - 90) + 20 + 'px';
-    b.style.background = colors[i % colors.length];
-    b.textContent = '🎈';
-    let clickCount = 0;
-    let clickTimer = null;
+    b.style.left = Math.random() * (fw - 90) + 20 + 'px'; b.style.top = Math.random() * (fh - 90) + 20 + 'px';
+    b.style.background = colors[i % colors.length]; b.textContent = '🎈';
+    let clickCount = 0, clickTimer = null;
     b.addEventListener('click', () => {
       clickCount++;
-      if (clickCount === 1) {
-        b.classList.add('armed');
-        clickTimer = setTimeout(() => {
-          clickCount = 0;
-          b.classList.remove('armed');
-        }, cfg.window);
-      } else if (clickCount === 2) {
-        clearTimeout(clickTimer);
-        popBalloon(b);
-      }
+      if (clickCount === 1) { b.classList.add('armed'); clickTimer = setTimeout(() => { clickCount = 0; b.classList.remove('armed'); }, cfg.window); }
+      else if (clickCount === 2) { clearTimeout(clickTimer); popBalloon(b); }
     });
     field.appendChild(b);
   }
 }
-
 function popBalloon(b) {
-  b.style.transform = 'scale(1.4)';
-  b.style.opacity = '0';
-  setTimeout(() => b.remove(), 150);
+  b.style.transform = 'scale(1.4)'; b.style.opacity = '0'; setTimeout(() => b.remove(), 150);
   balloonPopped++;
   document.getElementById('balloonScore').textContent = balloonPopped;
-  if (balloonPopped >= balloonTotalCount) {
-    winGame('You popped every balloon! 🎈');
-  }
+  if (balloonPopped >= balloonTotalCount) winGame('You popped every balloon! 🎈');
 }
 
-/* ---------- GAME 4: SCROLL ---------- */
+/* ---------- 4. SCROLL ---------- */
 const SCROLL_LEVELS = [
-  { count: 4,  acornSize: 70 },
-  { count: 6,  acornSize: 64 },
-  { count: 8,  acornSize: 58 },
-  { count: 11, acornSize: 52 },
-  { count: 14, acornSize: 46 }
+  {count:3,acornSize:76},{count:4,acornSize:70},{count:5,acornSize:66},{count:6,acornSize:62},
+  {count:8,acornSize:58},{count:9,acornSize:54},{count:10,acornSize:50},{count:12,acornSize:46},
+  {count:13,acornSize:42},{count:15,acornSize:38}
 ];
-let scrollFound = 0;
-let scrollTotalCount = 4;
-
+let scrollFound = 0, scrollTotalCount = 3;
 function startScroll() {
   const cfg = SCROLL_LEVELS[state.level.scroll - 1];
-  scrollFound = 0;
-  scrollTotalCount = cfg.count;
+  scrollFound = 0; scrollTotalCount = cfg.count;
   document.getElementById('scrollScore').textContent = 0;
   document.getElementById('scrollTotal').textContent = scrollTotalCount;
   document.getElementById('scrollProgressFill').style.width = '0%';
-
-  const content = document.getElementById('scrollContent');
-  content.innerHTML = '';
-  // A longer tree for more acorns, so higher levels take more scrolling.
+  const content = document.getElementById('scrollContent'); content.innerHTML = '';
   const contentHeight = 1200 + scrollTotalCount * 180;
   content.style.height = contentHeight + 'px';
-
-  const trunk = document.createElement('div');
-  trunk.className = 'tree-trunk';
-  content.appendChild(trunk);
-
-  const hint = document.createElement('div');
-  hint.className = 'scroll-hint';
-  hint.textContent = '⬇️ Keep scrolling!';
-  content.appendChild(hint);
-
+  const trunk = document.createElement('div'); trunk.className = 'tree-trunk'; content.appendChild(trunk);
+  const hint = document.createElement('div'); hint.className = 'scroll-hint'; hint.textContent = '⬇️ Keep scrolling!'; content.appendChild(hint);
   const spacing = (contentHeight - 300) / scrollTotalCount;
   for (let i = 0; i < scrollTotalCount; i++) {
     const acorn = document.createElement('button');
-    acorn.className = 'acorn';
-    acorn.style.width = cfg.acornSize + 'px';
-    acorn.style.height = cfg.acornSize + 'px';
+    acorn.className = 'acorn'; acorn.style.width = cfg.acornSize + 'px'; acorn.style.height = cfg.acornSize + 'px';
     acorn.textContent = '🌰';
     const top = 140 + i * spacing + (Math.random() * 40 - 20);
     const side = i % 2 === 0 ? (10 + Math.random() * 15) : (75 - Math.random() * 15);
-    acorn.style.top = top + 'px';
-    acorn.style.left = side + '%';
+    acorn.style.top = top + 'px'; acorn.style.left = side + '%';
     acorn.onclick = () => foundAcorn(acorn);
     content.appendChild(acorn);
   }
-
-  const note = document.createElement('div');
-  note.className = 'treasure-note';
-  note.textContent = '🐿️ The end of the tree!';
-  content.appendChild(note);
-
-  const field = document.getElementById('scrollField');
-  field.scrollTop = 0;
+  const note = document.createElement('div'); note.className = 'treasure-note'; note.textContent = '🐿️ The end of the tree!'; content.appendChild(note);
+  const field = document.getElementById('scrollField'); field.scrollTop = 0;
   field.onscroll = () => {
     const pct = (field.scrollTop / (field.scrollHeight - field.clientHeight)) * 100;
     document.getElementById('scrollProgressFill').style.width = Math.min(100, pct) + '%';
     hint.style.opacity = field.scrollTop > 40 ? '0' : '1';
   };
 }
-
 function foundAcorn(acorn) {
-  acorn.classList.add('found');
-  scrollFound++;
+  acorn.remove(); scrollFound++;
   document.getElementById('scrollScore').textContent = scrollFound;
-  if (scrollFound >= scrollTotalCount) {
-    winGame('You scrolled all the way and found every acorn! 🌰');
-  }
+  if (scrollFound >= scrollTotalCount) winGame('You scrolled all the way and found every acorn! 🌰');
 }
 
-/* ---------- GAME 5: TEXT SELECTION ---------- */
+/* ---------- 5. TEXT SELECTION ---------- */
 const wordPool = [
-  'dog','cat','sun','bird','hat','red','blue','green','moon','pig',
-  'star','frog','milk','tree','fish','duck','lamp','book','bear','kite',
-  'rain','cake','ship','lion','ball','crab','nest','king','swim','farm',
+  'dog','cat','sun','bird','hat','red','blue','green','moon','pig','star','frog','milk','tree','fish',
+  'duck','lamp','book','bear','kite','rain','cake','ship','lion','ball','crab','nest','king','swim','farm',
   'desk','door','deer','bike','boat','bell','cage','card','song','sock'
 ];
 const TEXTSELECT_LEVELS = [
-  { rounds: 3,  distractors: 3, tricky: false },
-  { rounds: 5,  distractors: 4, tricky: false },
-  { rounds: 6,  distractors: 5, tricky: true  },
-  { rounds: 8,  distractors: 6, tricky: true  },
-  { rounds: 10, distractors: 7, tricky: true  }
+  {rounds:3,distractors:3,tricky:false},{rounds:4,distractors:3,tricky:false},{rounds:5,distractors:4,tricky:false},
+  {rounds:6,distractors:4,tricky:false},{rounds:7,distractors:5,tricky:true},{rounds:8,distractors:5,tricky:true},
+  {rounds:9,distractors:6,tricky:true},{rounds:10,distractors:6,tricky:true},{rounds:11,distractors:7,tricky:true},
+  {rounds:12,distractors:8,tricky:true}
 ];
-let selectRounds = [];
-let selectIndex = 0;
-let selectScore = 0;
-
+let selectRounds = [], selectIndex = 0, selectScore = 0;
 function buildSelectRounds(cfg) {
   const targets = shuffle(wordPool).slice(0, cfg.rounds);
   return targets.map(target => {
     let pool = wordPool.filter(w => w !== target);
     let distractors;
     if (cfg.tricky) {
-      // Prefer distractors that share the target's first letter, which
-      // forces the student to actually read the word rather than just
-      // spot a shape/length at a glance.
       const sameLetter = pool.filter(w => w[0] === target[0]);
       const rest = shuffle(pool.filter(w => w[0] !== target[0]));
       distractors = [...shuffle(sameLetter), ...rest].slice(0, cfg.distractors);
-    } else {
-      distractors = shuffle(pool).slice(0, cfg.distractors);
-    }
+    } else distractors = shuffle(pool).slice(0, cfg.distractors);
     return { words: shuffle([target, ...distractors]), target };
   });
 }
-
 function startTextSelect() {
   const cfg = TEXTSELECT_LEVELS[state.level.textselect - 1];
-  selectRounds = buildSelectRounds(cfg);
-  selectIndex = 0;
-  selectScore = 0;
+  selectRounds = buildSelectRounds(cfg); selectIndex = 0; selectScore = 0;
   document.getElementById('selectScore').textContent = 0;
   document.getElementById('selectTotal').textContent = selectRounds.length;
   document.getElementById('selectFeedback').innerHTML = '&nbsp;';
   loadSelectRound();
 }
-
 function loadSelectRound() {
   const round = selectRounds[selectIndex];
   document.getElementById('selectTargetWord').textContent = round.target;
   document.getElementById('selectFeedback').innerHTML = '&nbsp;';
-  const line = document.getElementById('selectLine');
-  line.innerHTML = '';
+  const line = document.getElementById('selectLine'); line.innerHTML = '';
   round.words.forEach((w, i) => {
-    const span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = w;
+    const span = document.createElement('span'); span.className = 'word'; span.textContent = w;
     line.appendChild(span);
     if (i < round.words.length - 1) line.appendChild(document.createTextNode('  '));
   });
 }
-
 function checkSelection() {
   const round = selectRounds[selectIndex];
   const sel = window.getSelection();
@@ -1075,26 +668,241 @@ function checkSelection() {
   const feedback = document.getElementById('selectFeedback');
   if (!text) return;
   if (text === round.target.toLowerCase()) {
-    feedback.textContent = '🎉 Yes! That\'s ' + round.target + '!';
-    feedback.style.color = 'var(--accent5)';
-    selectScore++;
-    document.getElementById('selectScore').textContent = selectScore;
-    sel.removeAllRanges();
-    selectIndex++;
-    if (selectIndex >= selectRounds.length) {
-      setTimeout(() => winGame('You found every word! 🖍️'), 600);
-    } else {
-      setTimeout(loadSelectRound, 700);
-    }
+    feedback.textContent = '🎉 Yes! That\'s ' + round.target + '!'; feedback.style.color = 'var(--accent5)';
+    selectScore++; document.getElementById('selectScore').textContent = selectScore;
+    sel.removeAllRanges(); selectIndex++;
+    if (selectIndex >= selectRounds.length) setTimeout(() => winGame('You found every word! 🖍️'), 600);
+    else setTimeout(loadSelectRound, 700);
   } else {
-    feedback.textContent = 'Try again — select just "' + round.target + '"';
-    feedback.style.color = 'var(--accent1)';
+    feedback.textContent = 'Try again — select just "' + round.target + '"'; feedback.style.color = 'var(--accent1)';
     setTimeout(() => { sel.removeAllRanges(); }, 500);
   }
 }
-
 document.getElementById('selectLine').addEventListener('mouseup', checkSelection);
 document.getElementById('selectLine').addEventListener('touchend', checkSelection);
+
+/* ---------- 6. RIGHT-CLICK EXPLORER ---------- */
+const iconTypes = [{emoji:'📁',label:'Folder'},{emoji:'📄',label:'Document'},{emoji:'🖼️',label:'Picture'},{emoji:'🎵',label:'Song'},{emoji:'🎮',label:'Game'}];
+const actionPool = ['Open','Rename','Delete','Copy','Share','Print'];
+const RIGHTCLICK_LEVELS = [
+  {count:3,menuOptions:2},{count:4,menuOptions:2},{count:5,menuOptions:3},{count:6,menuOptions:3},
+  {count:7,menuOptions:3},{count:8,menuOptions:4},{count:9,menuOptions:4},{count:10,menuOptions:4},
+  {count:11,menuOptions:5},{count:12,menuOptions:5}
+];
+let rcFound = 0, rcTotalCount = 3, rcMenuOptions = 2;
+function closeContextMenu() { const m = document.querySelector('.context-menu'); if (m) m.remove(); }
+document.addEventListener('click', e => { if (!e.target.closest('.context-menu')) closeContextMenu(); });
+function startRightclick() {
+  const cfg = RIGHTCLICK_LEVELS[state.level.rightclick - 1];
+  rcFound = 0; rcTotalCount = cfg.count; rcMenuOptions = cfg.menuOptions;
+  document.getElementById('rcScore').textContent = 0;
+  document.getElementById('rcTotal').textContent = rcTotalCount;
+  const field = document.getElementById('rcField'); field.innerHTML = '';
+  closeContextMenu();
+  const fw = field.clientWidth || 700, fh = 420;
+  for (let i = 0; i < rcTotalCount; i++) {
+    const type = iconTypes[i % iconTypes.length];
+    const icon = document.createElement('div');
+    icon.className = 'rc-icon';
+    icon.style.left = Math.random() * (fw - 90) + 10 + 'px';
+    icon.style.top = Math.random() * (fh - 90) + 10 + 'px';
+    icon.innerHTML = `<span>${type.emoji}</span><span class="rc-label">${type.label}</span>`;
+    icon.addEventListener('contextmenu', e => { e.preventDefault(); openContextMenu(e, icon, field); });
+    field.appendChild(icon);
+  }
+}
+function openContextMenu(e, icon, field) {
+  closeContextMenu();
+  const distractors = shuffle(actionPool.filter(a => a !== 'Open')).slice(0, rcMenuOptions - 1);
+  const options = shuffle(['Open', ...distractors]);
+  const menu = document.createElement('div'); menu.className = 'context-menu';
+  const fieldRect = field.getBoundingClientRect();
+  menu.style.left = (e.clientX - fieldRect.left) + 'px';
+  menu.style.top = (e.clientY - fieldRect.top) + 'px';
+  options.forEach(opt => {
+    const btn = document.createElement('button'); btn.textContent = opt;
+    btn.onclick = () => {
+      if (opt === 'Open') { icon.classList.add('done'); rcFound++; document.getElementById('rcScore').textContent = rcFound; closeContextMenu(); if (rcFound >= rcTotalCount) winGame('You opened everything! 🖱️'); }
+      else { icon.classList.add('shake'); setTimeout(() => icon.classList.remove('shake'), 300); closeContextMenu(); }
+    };
+    menu.appendChild(btn);
+  });
+  field.appendChild(menu);
+}
+
+/* ---------- 7. HOVER HUNT ---------- */
+const HOVER_LEVELS = [
+  {count:3,size:90,hoverMs:700,moving:false},{count:4,size:84,hoverMs:800,moving:false},
+  {count:5,size:78,hoverMs:900,moving:false},{count:5,size:72,hoverMs:1000,moving:false},
+  {count:6,size:66,hoverMs:1100,moving:false},{count:6,size:60,hoverMs:1200,moving:true},
+  {count:7,size:54,hoverMs:1300,moving:true},{count:7,size:50,hoverMs:1400,moving:true},
+  {count:8,size:46,hoverMs:1500,moving:true},{count:8,size:42,hoverMs:1700,moving:true}
+];
+let hoverFoundCount = 0, hoverTotalCount = 3;
+function startHover() {
+  const cfg = HOVER_LEVELS[state.level.hover - 1];
+  hoverFoundCount = 0; hoverTotalCount = cfg.count;
+  document.getElementById('hoverScore').textContent = 0;
+  document.getElementById('hoverTotal').textContent = hoverTotalCount;
+  const field = document.getElementById('hoverField'); field.innerHTML = '';
+  const fw = field.clientWidth || 700, fh = 420;
+  for (let i = 0; i < hoverTotalCount; i++) {
+    const t = document.createElement('div');
+    t.className = 'hover-target' + (cfg.moving ? ' moving' : '');
+    t.style.width = cfg.size + 'px'; t.style.height = cfg.size + 'px';
+    t.style.left = Math.random() * (fw - cfg.size - 20) + 10 + 'px';
+    t.style.top = Math.random() * (fh - cfg.size - 20) + 10 + 'px';
+    t.style.background = colors[i % colors.length];
+    t.textContent = '🎯';
+    let elapsed = 0, timer = null;
+    const render = () => { t.style.background = `conic-gradient(white ${(elapsed/cfg.hoverMs)*100}%, ${colors[i % colors.length]} 0)`; };
+    t.addEventListener('mouseenter', () => {
+      if (t.classList.contains('done')) return;
+      timer = setInterval(() => {
+        elapsed += 50; render();
+        if (elapsed >= cfg.hoverMs) { clearInterval(timer); t.classList.add('done'); hoverFoundCount++; document.getElementById('hoverScore').textContent = hoverFoundCount; if (hoverFoundCount >= hoverTotalCount) winGame('Such steady hands! 🎯'); }
+      }, 50);
+    });
+    t.addEventListener('mouseleave', () => { clearInterval(timer); elapsed = 0; t.style.background = colors[i % colors.length]; });
+    field.appendChild(t);
+  }
+}
+
+/* ---------- 8. PRESS AND HOLD ---------- */
+const HOLD_LEVELS = [
+  {count:3,size:90,holdMs:500},{count:4,size:84,holdMs:600},{count:5,size:78,holdMs:700},
+  {count:5,size:72,holdMs:800},{count:6,size:66,holdMs:900},{count:6,size:60,holdMs:1000},
+  {count:7,size:54,holdMs:1150},{count:7,size:50,holdMs:1300},{count:8,size:46,holdMs:1450},
+  {count:8,size:42,holdMs:1600}
+];
+let holdFoundCount = 0, holdTotalCount = 3;
+function startHold() {
+  const cfg = HOLD_LEVELS[state.level.hold - 1];
+  holdFoundCount = 0; holdTotalCount = cfg.count;
+  document.getElementById('holdScore').textContent = 0;
+  document.getElementById('holdTotal').textContent = holdTotalCount;
+  const field = document.getElementById('holdField'); field.innerHTML = '';
+  const fw = field.clientWidth || 700, fh = 420;
+  for (let i = 0; i < holdTotalCount; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'hold-btn'; btn.style.width = cfg.size + 'px'; btn.style.height = cfg.size + 'px';
+    btn.style.left = Math.random() * (fw - cfg.size - 20) + 10 + 'px';
+    btn.style.top = Math.random() * (fh - cfg.size - 20) + 10 + 'px';
+    btn.style.background = colors[i % colors.length]; btn.textContent = '✋';
+    const fill = document.createElement('div'); fill.className = 'hold-fill'; btn.appendChild(fill);
+    let elapsed = 0, timer = null;
+    const start = () => {
+      if (btn.classList.contains('done')) return;
+      timer = setInterval(() => {
+        elapsed += 30; fill.style.height = Math.min(100, (elapsed / cfg.holdMs) * 100) + '%';
+        if (elapsed >= cfg.holdMs) { clearInterval(timer); btn.classList.add('done'); holdFoundCount++; document.getElementById('holdScore').textContent = holdFoundCount; if (holdFoundCount >= holdTotalCount) winGame('You charged them all up! ✋'); }
+      }, 30);
+    };
+    const stop = () => { clearInterval(timer); elapsed = 0; fill.style.height = '0%'; };
+    btn.addEventListener('mousedown', start); btn.addEventListener('mouseup', stop); btn.addEventListener('mouseleave', stop);
+    btn.addEventListener('touchstart', e => { e.preventDefault(); start(); }, { passive: false });
+    btn.addEventListener('touchend', stop);
+    field.appendChild(btn);
+  }
+}
+
+/* ---------- 9. SLIDE TO THE SPOT ---------- */
+const SLIDER_LEVELS = [
+  {rounds:3,tolerance:14,holdMs:300},{rounds:4,tolerance:12,holdMs:350},{rounds:5,tolerance:10,holdMs:350},
+  {rounds:5,tolerance:9,holdMs:400},{rounds:6,tolerance:8,holdMs:400},{rounds:6,tolerance:7,holdMs:450},
+  {rounds:7,tolerance:6,holdMs:450},{rounds:7,tolerance:5,holdMs:500},{rounds:8,tolerance:4,holdMs:550},
+  {rounds:8,tolerance:4,holdMs:600}
+];
+let sliderRoundIdx = 0, sliderRoundsTotal = 3, sliderTarget = 50, sliderTolerance = 10, sliderHoldMs = 300, sliderHoldElapsed = 0, sliderInterval = null;
+function startSlider() {
+  const cfg = SLIDER_LEVELS[state.level.slider - 1];
+  sliderRoundsTotal = cfg.rounds; sliderTolerance = cfg.tolerance; sliderHoldMs = cfg.holdMs;
+  sliderRoundIdx = 0;
+  document.getElementById('sliderScore').textContent = 0;
+  document.getElementById('sliderTotal').textContent = sliderRoundsTotal;
+  loadSliderRound();
+}
+function loadSliderRound() {
+  sliderHoldElapsed = 0;
+  document.getElementById('sliderProgressFill').style.width = '0%';
+  sliderTarget = sliderTolerance + 2 + Math.random() * (98 - 2 * sliderTolerance - 4);
+  const zone = document.getElementById('sliderZone');
+  const zoneMin = Math.max(0, sliderTarget - sliderTolerance), zoneMax = Math.min(100, sliderTarget + sliderTolerance);
+  zone.style.left = zoneMin + '%'; zone.style.width = (zoneMax - zoneMin) + '%';
+  const input = document.getElementById('sliderInput');
+  input.value = Math.random() < 0.5 ? 0 : 100;
+  if (sliderInterval) clearInterval(sliderInterval);
+  sliderInterval = setInterval(() => {
+    const v = Number(input.value);
+    const inZone = Math.abs(v - sliderTarget) <= sliderTolerance;
+    if (inZone) {
+      sliderHoldElapsed += 100;
+      document.getElementById('sliderProgressFill').style.width = Math.min(100, (sliderHoldElapsed / sliderHoldMs) * 100) + '%';
+      if (sliderHoldElapsed >= sliderHoldMs) {
+        clearInterval(sliderInterval);
+        sliderRoundIdx++;
+        document.getElementById('sliderScore').textContent = sliderRoundIdx;
+        if (sliderRoundIdx >= sliderRoundsTotal) winGame('You hit every zone! 🎚️');
+        else setTimeout(loadSliderRound, 400);
+      }
+    } else {
+      sliderHoldElapsed = 0;
+      document.getElementById('sliderProgressFill').style.width = '0%';
+    }
+  }, 100);
+}
+
+/* ---------- 10. LINE THEM UP ---------- */
+const REORDER_LEVELS = [3,4,5,6,6,7,7,8,8,9];
+let reorderValues = [], reorderTotalCount = 3, reorderDragIndex = null;
+function startReorder() {
+  reorderTotalCount = REORDER_LEVELS[state.level.reorder - 1];
+  document.getElementById('reorderScore').textContent = 0;
+  document.getElementById('reorderTotal').textContent = reorderTotalCount;
+  let vals;
+  do { vals = shuffle(Array.from({length: reorderTotalCount}, (_, i) => i + 1)); }
+  while (vals.every((v, i) => v === i + 1));
+  reorderValues = vals;
+  renderReorderList();
+}
+function renderReorderList() {
+  const list = document.getElementById('reorderList'); list.innerHTML = '';
+  const itemHeight = Math.max(38, Math.min(70, 420 / reorderTotalCount - 8));
+  reorderValues.forEach((val, idx) => {
+    const item = document.createElement('div');
+    item.className = 'reorder-item'; item.textContent = val; item.dataset.index = idx;
+    item.style.height = itemHeight + 'px';
+    item.style.fontSize = Math.max(1, itemHeight / 40) + 'rem';
+    item.style.background = colors[(val - 1) % colors.length];
+    item.draggable = true;
+    item.addEventListener('dragstart', e => { reorderDragIndex = idx; item.classList.add('dragging'); e.dataTransfer.setData('text/plain', idx); });
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+    item.addEventListener('dragover', e => e.preventDefault());
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      const fromIdx = Number(e.dataTransfer.getData('text/plain'));
+      swapReorderItems(fromIdx, idx);
+    });
+    item.addEventListener('touchstart', e => { reorderDragIndex = idx; item.classList.add('dragging'); }, { passive: true });
+    item.addEventListener('touchend', e => {
+      item.classList.remove('dragging');
+      const touch = e.changedTouches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      const targetItem = target && target.closest('.reorder-item');
+      if (targetItem && reorderDragIndex !== null) swapReorderItems(reorderDragIndex, Number(targetItem.dataset.index));
+      reorderDragIndex = null;
+    });
+    list.appendChild(item);
+  });
+}
+function swapReorderItems(i, j) {
+  if (i === j || i == null || j == null) return;
+  [reorderValues[i], reorderValues[j]] = [reorderValues[j], reorderValues[i]];
+  renderReorderList();
+  const correctCount = reorderValues.filter((v, idx) => v === idx + 1).length;
+  document.getElementById('reorderScore').textContent = correctCount;
+  if (reorderValues.every((v, idx) => v === idx + 1)) winGame('Everything is perfectly in order! 🔢');
+}
 </script>
 </body>
 </html>
