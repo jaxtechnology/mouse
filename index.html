@@ -131,6 +131,48 @@
     font-size: 1rem;
   }
 
+  /* Level selector */
+  .level-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .level-label {
+    color: var(--text-soft);
+    font-weight: bold;
+    margin-right: 4px;
+    font-size: 0.95rem;
+  }
+  .level-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--card-bg);
+    color: var(--text);
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 0 var(--shadow);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .level-btn.active {
+    background: var(--accent1);
+    color: white;
+  }
+  .level-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--shadow); }
+
+  @keyframes bob {
+    0%, 100% { margin-top: 0px; }
+    50% { margin-top: -16px; }
+  }
+  .bubble.drift, .balloon.drift {
+    animation: bob 1.5s ease-in-out infinite;
+  }
+
   /* Game 1: Click bubbles */
   .bubble-field {
     position: relative;
@@ -458,6 +500,14 @@
       <button class="reset-btn" onclick="startBubbles()">🔄 Restart</button>
     </div>
     <p class="instructions">Click on every bubble before they float away!</p>
+    <div class="level-bar" id="bubblesLevelBar">
+      <span class="level-label">Level:</span>
+      <button class="level-btn" data-level="1" onclick="playLevel('bubbles',1)">1</button>
+      <button class="level-btn" data-level="2" onclick="playLevel('bubbles',2)">2</button>
+      <button class="level-btn" data-level="3" onclick="playLevel('bubbles',3)">3</button>
+      <button class="level-btn" data-level="4" onclick="playLevel('bubbles',4)">4</button>
+      <button class="level-btn" data-level="5" onclick="playLevel('bubbles',5)">5</button>
+    </div>
     <div class="bubble-field" id="bubbleField"></div>
   </section>
 
@@ -469,6 +519,14 @@
       <button class="reset-btn" onclick="startDrag()">🔄 Restart</button>
     </div>
     <p class="instructions">Press and drag each shape into the box with the same color!</p>
+    <div class="level-bar" id="dragLevelBar">
+      <span class="level-label">Level:</span>
+      <button class="level-btn" data-level="1" onclick="playLevel('drag',1)">1</button>
+      <button class="level-btn" data-level="2" onclick="playLevel('drag',2)">2</button>
+      <button class="level-btn" data-level="3" onclick="playLevel('drag',3)">3</button>
+      <button class="level-btn" data-level="4" onclick="playLevel('drag',4)">4</button>
+      <button class="level-btn" data-level="5" onclick="playLevel('drag',5)">5</button>
+    </div>
     <div class="drag-area">
       <div class="drop-zones" id="dropZones"></div>
       <div class="drag-items" id="dragItems"></div>
@@ -483,6 +541,14 @@
       <button class="reset-btn" onclick="startBalloons()">🔄 Restart</button>
     </div>
     <p class="instructions">Click TWO times fast on a balloon to pop it!</p>
+    <div class="level-bar" id="balloonsLevelBar">
+      <span class="level-label">Level:</span>
+      <button class="level-btn" data-level="1" onclick="playLevel('balloons',1)">1</button>
+      <button class="level-btn" data-level="2" onclick="playLevel('balloons',2)">2</button>
+      <button class="level-btn" data-level="3" onclick="playLevel('balloons',3)">3</button>
+      <button class="level-btn" data-level="4" onclick="playLevel('balloons',4)">4</button>
+      <button class="level-btn" data-level="5" onclick="playLevel('balloons',5)">5</button>
+    </div>
     <div class="balloon-field" id="balloonField"></div>
   </section>
 
@@ -494,6 +560,14 @@
       <button class="reset-btn" onclick="startScroll()">🔄 Restart</button>
     </div>
     <p class="instructions">Scroll down the tree and click every acorn you find!</p>
+    <div class="level-bar" id="scrollLevelBar">
+      <span class="level-label">Level:</span>
+      <button class="level-btn" data-level="1" onclick="playLevel('scroll',1)">1</button>
+      <button class="level-btn" data-level="2" onclick="playLevel('scroll',2)">2</button>
+      <button class="level-btn" data-level="3" onclick="playLevel('scroll',3)">3</button>
+      <button class="level-btn" data-level="4" onclick="playLevel('scroll',4)">4</button>
+      <button class="level-btn" data-level="5" onclick="playLevel('scroll',5)">5</button>
+    </div>
     <div class="scroll-progress-track"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
     <div class="scroll-field" id="scrollField">
       <div class="scroll-content" id="scrollContent"></div>
@@ -508,6 +582,14 @@
       <button class="reset-btn" onclick="startTextSelect()">🔄 Restart</button>
     </div>
     <p class="instructions">Press the mouse down before the word, drag across it, then let go!</p>
+    <div class="level-bar" id="textselectLevelBar">
+      <span class="level-label">Level:</span>
+      <button class="level-btn" data-level="1" onclick="playLevel('textselect',1)">1</button>
+      <button class="level-btn" data-level="2" onclick="playLevel('textselect',2)">2</button>
+      <button class="level-btn" data-level="3" onclick="playLevel('textselect',3)">3</button>
+      <button class="level-btn" data-level="4" onclick="playLevel('textselect',4)">4</button>
+      <button class="level-btn" data-level="5" onclick="playLevel('textselect',5)">5</button>
+    </div>
     <div class="select-area">
       <div class="select-target" id="selectTarget">Find: <span id="selectTargetWord">word</span></div>
       <div class="select-line" id="selectLine"></div>
@@ -520,7 +602,9 @@
     <div class="celebrate">
       <span class="big-emoji">🏆</span>
       <h2>Great job!</h2>
+      <p id="winLevelLine" style="font-weight:bold; color: var(--accent2); margin: 0 0 6px;"></p>
       <p id="winText">You did it!</p>
+      <button class="play-again-btn" id="nextLevelBtn" style="display:none; margin-right:10px;" onclick="nextLevelClick()">Next Level ➡</button>
       <button class="play-again-btn" onclick="showScreen('menu')">Back to Games</button>
     </div>
   </section>
@@ -529,14 +613,14 @@
 <script>
 const colors = ['#ff6b6b','#4ecdc4','#ffd93d','#a78bfa','#6bcb77','#5aa9e6','#ff9f5b','#e685c9'];
 
-// Tracks how many times each game has been played this visit, so a
-// replay (or the Restart button) can be a bit longer / different each time.
-const playCounts = { bubbles: 0, drag: 0, balloons: 0, scroll: 0, textselect: 0 };
-function nextCount(game, base, step, max) {
-  const n = Math.min(max, base + playCounts[game] * step);
-  playCounts[game]++;
-  return n;
-}
+// Global play state: which game is active, and which level (1-5) each
+// game is currently set to. Levels are NOT saved between page loads —
+// every visit starts back at Level 1.
+const state = {
+  game: null,
+  level: { bubbles: 1, drag: 1, balloons: 1, scroll: 1, textselect: 1 }
+};
+
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -546,28 +630,69 @@ function shuffle(arr) {
   return a;
 }
 
+const GAME_START = {
+  bubbles: startBubbles,
+  drag: startDrag,
+  balloons: startBalloons,
+  scroll: startScroll,
+  textselect: startTextSelect
+};
+
+function updateLevelBar(gameId) {
+  const bar = document.getElementById(gameId + 'LevelBar');
+  if (!bar) return;
+  bar.querySelectorAll('.level-btn').forEach(btn => {
+    btn.classList.toggle('active', Number(btn.dataset.level) === state.level[gameId]);
+  });
+}
+
+function playLevel(gameId, level) {
+  state.game = gameId;
+  state.level[gameId] = level;
+  updateLevelBar(gameId);
+  GAME_START[gameId]();
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if (id === 'bubbles') startBubbles();
-  if (id === 'drag') startDrag();
-  if (id === 'balloons') startBalloons();
-  if (id === 'scroll') startScroll();
-  if (id === 'textselect') startTextSelect();
+  if (GAME_START[id]) {
+    playLevel(id, state.level[id]);
+  }
 }
 
 function winGame(text) {
+  const gameId = state.game;
+  const level = state.level[gameId];
+  document.getElementById('winLevelLine').textContent = `Level ${level} of 5 complete!`;
   document.getElementById('winText').textContent = text;
+  const nextBtn = document.getElementById('nextLevelBtn');
+  nextBtn.style.display = level < 5 ? 'inline-block' : 'none';
   setTimeout(() => showScreen('win'), 500);
 }
 
+function nextLevelClick() {
+  const gameId = state.game;
+  const next = Math.min(5, state.level[gameId] + 1);
+  state.level[gameId] = next;
+  showScreen(gameId);
+}
+
 /* ---------- GAME 1: BUBBLES ---------- */
+const BUBBLE_LEVELS = [
+  { count: 6,  minSize: 65, maxSize: 95, drift: false },
+  { count: 9,  minSize: 58, maxSize: 85, drift: false },
+  { count: 13, minSize: 50, maxSize: 75, drift: true  },
+  { count: 17, minSize: 42, maxSize: 65, drift: true  },
+  { count: 22, minSize: 36, maxSize: 55, drift: true  }
+];
 let bubblePopped = 0;
-let bubbleTotalCount = 10;
+let bubbleTotalCount = 6;
 
 function startBubbles() {
+  const cfg = BUBBLE_LEVELS[state.level.bubbles - 1];
   bubblePopped = 0;
-  bubbleTotalCount = nextCount('bubbles', 10, 3, 22);
+  bubbleTotalCount = cfg.count;
   document.getElementById('bubbleScore').textContent = 0;
   document.getElementById('bubbleTotal').textContent = bubbleTotalCount;
   const field = document.getElementById('bubbleField');
@@ -575,13 +700,14 @@ function startBubbles() {
   const fw = field.clientWidth || 700;
   const fh = 420;
   for (let i = 0; i < bubbleTotalCount; i++) {
-    const size = 50 + Math.random() * 40;
+    const size = cfg.minSize + Math.random() * (cfg.maxSize - cfg.minSize);
     const btn = document.createElement('button');
-    btn.className = 'bubble';
+    btn.className = 'bubble' + (cfg.drift ? ' drift' : '');
     btn.style.width = size + 'px';
     btn.style.height = size + 'px';
     btn.style.left = Math.random() * (fw - size) + 'px';
     btn.style.top = Math.random() * (fh - size) + 'px';
+    if (cfg.drift) btn.style.animationDelay = (-Math.random() * 1.5) + 's';
     btn.style.background = colors[i % colors.length];
     btn.textContent = '🫧';
     btn.onclick = () => popBubble(btn);
@@ -608,13 +734,21 @@ function popBubble(btn) {
 
 /* ---------- GAME 2: DRAG AND DROP ---------- */
 const shapePool = ['⭐','❤️','🔵','🟢','🔺','🟣','🟠','🔶'];
+const DRAG_LEVELS = [
+  { count: 3, zoneSize: 120 },
+  { count: 4, zoneSize: 110 },
+  { count: 5, zoneSize: 100 },
+  { count: 6, zoneSize: 90  },
+  { count: 8, zoneSize: 80  }
+];
 let dragPlaced = 0;
-let dragTotalCount = 5;
-let shapeEmojis = shapePool.slice(0, 5);
+let dragTotalCount = 3;
+let shapeEmojis = shapePool.slice(0, 3);
 
 function startDrag() {
+  const cfg = DRAG_LEVELS[state.level.drag - 1];
   dragPlaced = 0;
-  dragTotalCount = nextCount('drag', 5, 1, shapePool.length);
+  dragTotalCount = cfg.count;
   shapeEmojis = shuffle(shapePool).slice(0, dragTotalCount);
   document.getElementById('dragScore').textContent = 0;
   document.getElementById('dragTotal').textContent = dragTotalCount;
@@ -631,6 +765,8 @@ function startDrag() {
     const zone = document.createElement('div');
     zone.className = 'drop-zone';
     zone.dataset.match = emoji;
+    zone.style.width = cfg.zoneSize + 'px';
+    zone.style.height = cfg.zoneSize + 'px';
     zone.style.background = colorOrder[i] + '22';
     zone.style.borderColor = colorOrder[i];
     zone.textContent = emoji;
@@ -739,12 +875,20 @@ function placeItem(item, zone) {
 }
 
 /* ---------- GAME 3: DOUBLE-CLICK BALLOONS ---------- */
+const BALLOON_LEVELS = [
+  { count: 5,  window: 650, drift: false },
+  { count: 7,  window: 550, drift: false },
+  { count: 10, window: 480, drift: true  },
+  { count: 13, window: 420, drift: true  },
+  { count: 17, window: 350, drift: true  }
+];
 let balloonPopped = 0;
-let balloonTotalCount = 8;
+let balloonTotalCount = 5;
 
 function startBalloons() {
+  const cfg = BALLOON_LEVELS[state.level.balloons - 1];
   balloonPopped = 0;
-  balloonTotalCount = nextCount('balloons', 8, 2, 18);
+  balloonTotalCount = cfg.count;
   document.getElementById('balloonScore').textContent = 0;
   document.getElementById('balloonTotal').textContent = balloonTotalCount;
   const field = document.getElementById('balloonField');
@@ -753,7 +897,8 @@ function startBalloons() {
   const fh = 380;
   for (let i = 0; i < balloonTotalCount; i++) {
     const b = document.createElement('div');
-    b.className = 'balloon';
+    b.className = 'balloon' + (cfg.drift ? ' drift' : '');
+    if (cfg.drift) b.style.animationDelay = (-Math.random() * 1.5) + 's';
     b.style.left = Math.random() * (fw - 90) + 20 + 'px';
     b.style.top = Math.random() * (fh - 90) + 20 + 'px';
     b.style.background = colors[i % colors.length];
@@ -767,7 +912,7 @@ function startBalloons() {
         clickTimer = setTimeout(() => {
           clickCount = 0;
           b.classList.remove('armed');
-        }, 500);
+        }, cfg.window);
       } else if (clickCount === 2) {
         clearTimeout(clickTimer);
         popBalloon(b);
@@ -789,19 +934,27 @@ function popBalloon(b) {
 }
 
 /* ---------- GAME 4: SCROLL ---------- */
+const SCROLL_LEVELS = [
+  { count: 4,  acornSize: 70 },
+  { count: 6,  acornSize: 64 },
+  { count: 8,  acornSize: 58 },
+  { count: 11, acornSize: 52 },
+  { count: 14, acornSize: 46 }
+];
 let scrollFound = 0;
-let scrollTotalCount = 6;
+let scrollTotalCount = 4;
 
 function startScroll() {
+  const cfg = SCROLL_LEVELS[state.level.scroll - 1];
   scrollFound = 0;
-  scrollTotalCount = nextCount('scroll', 6, 2, 14);
+  scrollTotalCount = cfg.count;
   document.getElementById('scrollScore').textContent = 0;
   document.getElementById('scrollTotal').textContent = scrollTotalCount;
   document.getElementById('scrollProgressFill').style.width = '0%';
 
   const content = document.getElementById('scrollContent');
   content.innerHTML = '';
-  // A longer tree for more acorns, so later rounds take more scrolling.
+  // A longer tree for more acorns, so higher levels take more scrolling.
   const contentHeight = 1200 + scrollTotalCount * 180;
   content.style.height = contentHeight + 'px';
 
@@ -818,6 +971,8 @@ function startScroll() {
   for (let i = 0; i < scrollTotalCount; i++) {
     const acorn = document.createElement('button');
     acorn.className = 'acorn';
+    acorn.style.width = cfg.acornSize + 'px';
+    acorn.style.height = cfg.acornSize + 'px';
     acorn.textContent = '🌰';
     const top = 140 + i * spacing + (Math.random() * 40 - 20);
     const side = i % 2 === 0 ? (10 + Math.random() * 15) : (75 - Math.random() * 15);
@@ -854,23 +1009,42 @@ function foundAcorn(acorn) {
 const wordPool = [
   'dog','cat','sun','bird','hat','red','blue','green','moon','pig',
   'star','frog','milk','tree','fish','duck','lamp','book','bear','kite',
-  'rain','cake','ship','lion','ball','crab','nest','king','swim','farm'
+  'rain','cake','ship','lion','ball','crab','nest','king','swim','farm',
+  'desk','door','deer','bike','boat','bell','cage','card','song','sock'
+];
+const TEXTSELECT_LEVELS = [
+  { rounds: 3,  distractors: 3, tricky: false },
+  { rounds: 5,  distractors: 4, tricky: false },
+  { rounds: 6,  distractors: 5, tricky: true  },
+  { rounds: 8,  distractors: 6, tricky: true  },
+  { rounds: 10, distractors: 7, tricky: true  }
 ];
 let selectRounds = [];
 let selectIndex = 0;
 let selectScore = 0;
 
-function buildSelectRounds(count) {
-  const targets = shuffle(wordPool).slice(0, count);
+function buildSelectRounds(cfg) {
+  const targets = shuffle(wordPool).slice(0, cfg.rounds);
   return targets.map(target => {
-    const distractors = shuffle(wordPool.filter(w => w !== target)).slice(0, 4);
+    let pool = wordPool.filter(w => w !== target);
+    let distractors;
+    if (cfg.tricky) {
+      // Prefer distractors that share the target's first letter, which
+      // forces the student to actually read the word rather than just
+      // spot a shape/length at a glance.
+      const sameLetter = pool.filter(w => w[0] === target[0]);
+      const rest = shuffle(pool.filter(w => w[0] !== target[0]));
+      distractors = [...shuffle(sameLetter), ...rest].slice(0, cfg.distractors);
+    } else {
+      distractors = shuffle(pool).slice(0, cfg.distractors);
+    }
     return { words: shuffle([target, ...distractors]), target };
   });
 }
 
 function startTextSelect() {
-  const count = nextCount('textselect', 5, 1, 10);
-  selectRounds = buildSelectRounds(count);
+  const cfg = TEXTSELECT_LEVELS[state.level.textselect - 1];
+  selectRounds = buildSelectRounds(cfg);
   selectIndex = 0;
   selectScore = 0;
   document.getElementById('selectScore').textContent = 0;
